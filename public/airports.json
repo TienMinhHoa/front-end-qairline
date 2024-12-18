@@ -1,0 +1,164 @@
+[
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724ef"},
+    "code": "SGN",
+    "country": "Vietnam",
+    "latitude": 10.8231,
+    "location": "Tp. Hồ Chí Minh",
+    "longitude": 106.6839,
+    "name": "Sân bay Tân Sơn Nhất"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f0"},
+    "code": "HAN",
+    "country": "Vietnam",
+    "latitude": 21.2213,
+    "location": "Hà Nội",
+    "longitude": 105.8005,
+    "name": "Sân bay Nội Bài"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f1"},
+    "code": "BMV",
+    "country": "Vietnam",
+    "latitude": 12.6991,
+    "location": "Buôn Ma Thuột",
+    "longitude": 108.0421,
+    "name": "Sân bay Buôn Ma Thuột"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f2"},
+    "code": "VCA",
+    "country": "Vietnam",
+    "latitude": 10.0444,
+    "location": "Cần Thơ",
+    "longitude": 105.3577,
+    "name": "Sân bay Trà Nóc"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f3"},
+    "code": "VCL",
+    "country": "Vietnam",
+    "latitude": 14.8667,
+    "location": "Chu Lai",
+    "longitude": 108.8012,
+    "name": "Sân bay Chu Lai"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f4"},
+    "code": "DLI",
+    "country": "Vietnam",
+    "latitude": 11.9647,
+    "location": "Đà Lạt",
+    "longitude": 108.351,
+    "name": "Sân bay Liên Khương"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f5"},
+    "code": "HPH",
+    "country": "Vietnam",
+    "latitude": 20.8189,
+    "location": "Hải Phòng",
+    "longitude": 106.7074,
+    "name": "Sân bay Cát Bi"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f6"},
+    "code": "VKG",
+    "country": "Vietnam",
+    "latitude": 18.7111,
+    "location": "Vinh",
+    "longitude": 105.6904,
+    "name": "Sân bay Vinh"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f7"},
+    "code": "UIH",
+    "country": "Vietnam",
+    "latitude": 16.3194,
+    "location": "Huế",
+    "longitude": 107.6791,
+    "name": "Sân bay Phú Bài"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f8"},
+    "code": "SGX",
+    "country": "Vietnam",
+    "latitude": 9.1756,
+    "location": "Côn Đảo",
+    "longitude": 106.6333,
+    "name": "Sân bay Côn Sơn"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724f9"},
+    "code": "VII",
+    "country": "Vietnam",
+    "latitude": 10.015,
+    "location": "Rạch Giá",
+    "longitude": 105.0844,
+    "name": "Sân bay Rạch Giá"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724fa"},
+    "code": "CXR",
+    "country": "Vietnam",
+    "latitude": 11.9981,
+    "location": "Cam Ranh",
+    "longitude": 109.2125,
+    "name": "Sân bay Cam Ranh"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724fb"},
+    "code": "PQC",
+    "country": "Vietnam",
+    "latitude": 10.2286,
+    "location": "Phú Quốc",
+    "longitude": 103.9814,
+    "name": "Sân bay Phú Quốc"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724fc"},
+    "code": "UIH",
+    "country": "Vietnam",
+    "latitude": 16.3194,
+    "location": "Huế",
+    "longitude": 107.6791,
+    "name": "Sân bay Phú Bài"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724fd"},
+    "code": "CAH",
+    "country": "Vietnam",
+    "latitude": 9.1772,
+    "location": "Cà Mau",
+    "longitude": 105.1542,
+    "name": "Sân bay Cà Mau"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724fe"},
+    "code": "VCS",
+    "country": "Vietnam",
+    "latitude": 21.16,
+    "location": "Quảng Ninh",
+    "longitude": 107.4494,
+    "name": "Sân bay Vân Đồn"
+  },
+  {
+    "_id": {"$oid": "6760391af9c1d12b4cc724ff"},
+    "code": "HPH",
+    "country": "Vietnam",
+    "latitude": 20.8189,
+    "location": "Hải Phòng",
+    "longitude": 106.7074,
+    "name": "Sân bay Cát Bi"
+  },
+  {
+    "_id": "6760391af9c1d12b4cc724f0",
+    "code": "DAD",
+    "country": "Vietnam",
+    "latitude": 16.0439,
+    "location": "Đà Nẵng",
+    "longitude": 108.2022,
+    "name": "Sân bay Quốc tế Đà Nẵng"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "_id": {"$oid": "675e56c30926be1e4b2eb024"},
+    "__v": 0,
+    "code": "qairline",
+    "contactNumber": "0325875898",
+    "createdAt": {"$date": "2024-12-15T04:10:43.518Z"},
+    "name": "QAirline",
+    "operatingCountry": "Việt Nam",
+    "updatedAt": {"$date": "2024-12-15T04:10:43.518Z"}
+  }
+]

@@ -12,19 +12,19 @@ import {
     TablePagination,
     Stack,
 } from '@mui/material'
-import { CreateFlightModal } from '@/components/modals/flight/CreateFlightModal.jsx'
-import { EditFlightModal } from '@/components/modals/flight/EditFlightModal.jsx'
-import { DeleteFlightModal } from '@/components/modals/flight/DeleteFlightModal'
+import { CreateAircraftModal } from '@/components/modals/aircraft/CreateAircraftModal.jsx'
+import { EditAircraftModal } from '@/components/modals/aircraft/EditAircraftModal.jsx'
+import { DeleteAircraftModal } from '@/components/modals/aircraft/DeleteAircraftModal'
 
 import { createSvgIcon } from '@mui/material/utils'
 import DeleteIcon from '@mui/icons-material/Delete'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import {
-    createFlight,
-    deleteFlight,
-    getListFlights,
-    updateFlight,
-} from '@/services/flight.js'
+    createPlane,
+    deletePlane,
+    getListPlanes,
+    updatePlane,
+} from '@/services/plane.js'
 
 const PlusIcon = createSvgIcon(
     // credit: plus icon from https://heroicons.com
@@ -46,14 +46,14 @@ const PlusIcon = createSvgIcon(
 
 const initialRows = []
 
-export default function Flight() {
+export default function Aircraft() {
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
-    const [flights, setFlights] = useState([])
+    const [aircrafts, setAircraft] = useState([])
     const paginationModel = { page: page, pageSize: 10 }
 
-    const [editingFlight, setEditingFlight] = useState(null)
-    const [deletingFlight, setDeletingFlight] = useState(null)
+    const [editingAircraft, setEditingAircraft] = useState(null)
+    const [deletingAircraft, setDeletingAircraft] = useState(null)
 
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -72,10 +72,10 @@ export default function Flight() {
         setIsCreateModalOpen(true)
     }
 
-    const fetchFlightData = async (pagination) => {
+    const fetchAircraftData = async (pagination) => {
         try {
-            const response = await getListFlights(pagination)
-            setFlights(
+            const response = await getListPlanes(pagination)
+            setAircraft(
                 response.data.map((res) => ({
                     ...res,
                     id: res._id,
@@ -89,31 +89,31 @@ export default function Flight() {
     }
 
     useEffect(() => {
-        fetchFlightData(paginationModel)
+        fetchAircraftData(paginationModel)
     }, [])
 
-    const handleCreateFlight = async (data) => {
+    const handleCreateAircraft = async (data) => {
         try {
-            await createFlight(data)
-            await fetchFlightData(paginationModel)
+            await createPlane(data)
+            await fetchAircraftData(paginationModel)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const handleEditFlight = async (data) => {
+    const handleEditAircraft = async (data) => {
         try {
-            await updateFlight(data.id, data)
-            await fetchFlightData(paginationModel)
+            await updatePlane(data.id, data)
+            await fetchAircraftData(paginationModel)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const handleDeleteFlight = async (data) => {
+    const handleDeleteAircraft = async (data) => {
         try {
-            await deleteFlight(data.id)
-            await fetchFlightData(paginationModel)
+            await deletePlane(data.id)
+            await fetchAircraftData(paginationModel)
         } catch (e) {
             console.log(e)
         }
@@ -134,9 +134,6 @@ export default function Flight() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     paddingTop: 2,
-                    // margin: '0 auto',
-                    // backgroundColor: 'black',
-                    // backgroundColor: 'rgb(255,255,255,0.5)',
                 }}
             >
                 <Button
@@ -187,17 +184,6 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Number
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
                                         Name
                                     </TableCell>
                                     <TableCell
@@ -209,7 +195,7 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        PlaneCode
+                                        Code
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -220,7 +206,7 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        capacity
+                                        Engine
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -231,7 +217,7 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        price
+                                        Max Speed
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -242,51 +228,7 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        status
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        airportFrom
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        airportTo
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        departureTime
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        arrivalTime
+                                        numberOfSeats
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -309,37 +251,22 @@ export default function Flight() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {flights
+                                {aircrafts
                                     .slice(
                                         page * rowsPerPage,
                                         page * rowsPerPage + rowsPerPage
                                     )
                                     .map((row, index) => (
                                         <TableRow key={index}>
-                                            <TableCell>{row.number}</TableCell>
                                             <TableCell>{row.name}</TableCell>
+                                            <TableCell>{row.code}</TableCell>
+                                            <TableCell>{row.engine}</TableCell>
                                             <TableCell>
-                                                {row.planeCode}
+                                                {row.maxSpeed}
                                             </TableCell>
                                             <TableCell>
-                                                {row.capacity}
+                                                {row.numberOfSeats}
                                             </TableCell>
-                                            <TableCell>{row.price}</TableCell>
-                                            <TableCell>{row.status}</TableCell>
-
-                                            <TableCell>
-                                                {row.airportFrom}
-                                            </TableCell>
-                                            <TableCell>
-                                                {row.airportTo}
-                                            </TableCell>
-                                            <TableCell>
-                                                {row.departureTime}
-                                            </TableCell>
-                                            <TableCell>
-                                                {row.arrivalTime}
-                                            </TableCell>
-
                                             <TableCell>
                                                 <Stack
                                                     direction="row"
@@ -364,7 +291,7 @@ export default function Flight() {
                                                             <DeleteIcon />
                                                         }
                                                         onClick={() => {
-                                                            setDeletingFlight(
+                                                            setDeletingAircraft(
                                                                 row
                                                             )
                                                             setIsDeleteModalOpen(
@@ -393,7 +320,7 @@ export default function Flight() {
                                                             <BorderColorIcon />
                                                         }
                                                         onClick={() => {
-                                                            setEditingFlight(
+                                                            setEditingAircraft(
                                                                 row
                                                             )
                                                             setIsEditModalOpen(
@@ -410,28 +337,28 @@ export default function Flight() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <CreateFlightModal
+                    <CreateAircraftModal
                         open={isCreateModalOpen}
                         onClose={() => setIsCreateModalOpen(false)}
-                        onSave={handleCreateFlight}
+                        onSave={handleCreateAircraft}
                     />
-                    <EditFlightModal
+                    <EditAircraftModal
                         open={isEditModalOpen}
                         onClose={() => setIsEditModalOpen(false)}
-                        onSave={handleEditFlight}
-                        fligtData={editingFlight}
+                        onSave={handleEditAircraft}
+                        planeData={editingAircraft}
                     />
 
-                    <DeleteFlightModal
+                    <DeleteAircraftModal
                         open={isDeleteModalOpen}
                         onClose={() => setIsDeleteModalOpen(false)}
-                        onSave={handleDeleteFlight}
-                        flightData={deletingFlight}
+                        onSave={handleDeleteAircraft}
+                        planeData={deletingAircraft}
                     />
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={flights.length}
+                        count={aircrafts.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

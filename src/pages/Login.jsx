@@ -57,7 +57,7 @@ const LoginPage = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: '50px',
-                
+                // ml: 40,
             }}
         >
             <Card
@@ -68,7 +68,7 @@ const LoginPage = () => {
                     padding: 4,
                     textAlign: 'center',
                     borderRadius: '30px',
-                    backgroundImage:'url(login.jpg)',
+                    backgroundImage: 'url(login.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -180,7 +180,7 @@ const LoginPage = () => {
                             sx={{
                                 position: 'absolute',
                                 left: '55%',
-                                backgroundColor: 'rgba(97, 179, 109, 0.8)',
+                                backgroundColor: 'rgba(114, 128, 255, 0.8)',
                                 top: 0,
                                 // marginTop:'-50',
                                 width: '45%',
@@ -191,12 +191,22 @@ const LoginPage = () => {
                                 sx={{
                                     mt: '50%',
                                     textAlign: 'center',
-                                    color:'white'
+                                    color: 'white',
                                 }}
                                 variant="body2"
                             >
-                                <div style={{fontSize:'1.5rem',fontWeight:'bold'}}>Xin chào</div> 
-                                <div>Nhập thông tin cá nhân của bạn và bắt đầu chuyến hành trình với vivu Airline nào!</div>
+                                <div
+                                    style={{
+                                        fontSize: '1.5rem',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Xin chào
+                                </div>
+                                <div>
+                                    Nhập thông tin cá nhân của bạn và bắt đầu
+                                    chuyến hành trình với vivu Airline nào!
+                                </div>
                                 <Button
                                     href={PATHS.signup}
                                     variant="contained"
@@ -209,7 +219,7 @@ const LoginPage = () => {
                                         left: '25%',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        backgroundColor:"#77DADA"
+                                        backgroundColor: '#77DADA',
                                     }}
                                 >
                                     Đăng ký

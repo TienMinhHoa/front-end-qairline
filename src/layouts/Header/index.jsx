@@ -23,22 +23,8 @@ function Header() {
     let routes = ['/', '/createAuction']
     if (isAuthenticated) {
         if (user?.role === ROLES.ADMIN) {
-            pages = [
-                'Home',
-                'Post',
-                'Flight ',
-                'Airline',
-                'Airport',
-                'Dashboard',
-            ]
-            routes = [
-                '/',
-                '/post',
-                '/flight',
-                '/airline',
-                '/airport',
-                'dashboard',
-            ]
+            pages = ['Home', 'Post', 'Flight ', 'Aircraft', 'Dashboard']
+            routes = ['/', '/post', '/flight', '/aircraft', 'dashboard']
         } else {
             pages = [
                 'Home',
@@ -86,6 +72,7 @@ function Header() {
                 // zIndex:9999,
                 backgroundColor: 'white',
                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                // width: '100%',
             }}
         >
             <Container maxWidth="xl">
