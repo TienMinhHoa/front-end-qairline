@@ -28,13 +28,13 @@ function Header() {
         } else {
             pages = [
                 'Home',
-                'Booking Flight',
+                'List Flight',
                 'Travel Information',
                 'Your Flight',
             ]
             routes = [
                 '/',
-                '/booking-flight',
+                '/list-flight',
                 '/travel-information',
                 '/your-flight',
             ]
