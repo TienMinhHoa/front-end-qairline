@@ -1,5 +1,6 @@
 export const numberWithComas = (number, comas) => {
-    return number
+    let tmp = number ? number : 0
+    return tmp
         .toString()
         .replace(
             /\B(?=(\d{3})+(?!\d))/g,
