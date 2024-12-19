@@ -1,5 +1,5 @@
-import {Box, Container, Typography} from '@mui/material'
-import {SearchFlight} from "@/components/search/SearchFlight.jsx";
+import { Box, Container, Typography } from '@mui/material'
+import { SearchFlight } from '@/components/search/SearchFlight.jsx'
 
 const Home = () => {
     return (
@@ -18,10 +18,14 @@ const Home = () => {
                     fontWeight: 'Bold',
                 }}
             >
-                <img alt='plane' src='https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=LKyRwKDq' style={{
-                    width: '90%',
-                    height: '500px',
-                }} />
+                <img
+                    alt="plane"
+                    src="https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=LKyRwKDq"
+                    style={{
+                        width: '90%',
+                        height: '50%',
+                    }}
+                />
                 <Box
                     mt={6}
                     sx={{
@@ -29,6 +33,7 @@ const Home = () => {
                         flexDirection: 'column',
                         gap: 2,
                         alignItems: 'center',
+                        // backgroundColor: 'black',
                     }}
                 >
                     <Typography

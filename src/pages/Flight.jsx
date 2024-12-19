@@ -445,7 +445,7 @@ export default function Flight() {
                         open={isEditModalOpen}
                         onClose={() => setIsEditModalOpen(false)}
                         onSave={handleEditFlight}
-                        fligtData={editingFlight}
+                        flightData={editingFlight}
                     />
 
                     <DeleteFlightModal

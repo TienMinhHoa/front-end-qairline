@@ -1,10 +1,10 @@
-import {FlightItem} from "@/components/flight/FlightItem.jsx";
-import {Container, Typography} from "@mui/material";
-import {useSelector} from "react-redux";
-import React, {useEffect, useState} from "react";
-import {getListFlights} from "@/services/flight.js";
-import {getAirportCodeLabel} from "@/utils/helpers/getAirportCodeLabel.js";
-import {convertDateTime} from "@/utils/helpers/convertDateTime.js";
+import { FlightItem } from '@/components/flight/FlightItem.jsx'
+import { Container, Typography } from '@mui/material'
+import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { getListFlights } from '@/services/flight.js'
+import { getAirportCodeLabel } from '@/utils/helpers/getAirportCodeLabel.js'
+import { convertDateTime } from '@/utils/helpers/convertDateTime.js'
 
 const ListFlight = () => {
     const query = useSelector((state) => state.query.query)
@@ -29,8 +29,8 @@ const ListFlight = () => {
         fetchFlightData({ page: 1, perPage: 20, ...query, status: 'scheduled' })
     }, [])
     return (
-        <Container sx={{marginTop: 5}}>
-            <Typography variant="h4">Danh sách chuyến bay</Typography>
+        <Container sx={{ marginTop: 5 }}>
+            <Typography variant="h4">List of Flights</Typography>
             {flights.map((flight) => (
                 <FlightItem
                     key={flight.id}

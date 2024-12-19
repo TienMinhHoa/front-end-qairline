@@ -176,8 +176,8 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                     margin="dense"
                     label={
                         !formData.planeCode
-                            ? 'Số lượng ghế'
-                            : `Số lượng ghế (trong khoảng từ ${numberOfSeats[0]} - ${numberOfSeats[1]} ghế)`
+                            ? 'Number of Seats'
+                            : `Number of Seats (Between ${numberOfSeats[0]} - ${numberOfSeats[1]})`
                     }
                     name="capacity"
                     value={formData.capacity}
@@ -201,7 +201,7 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Giá cơ bản (VND)"
+                    label="Price"
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
@@ -209,13 +209,13 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                     type="number"
                 />
                 <FormControl fullWidth margin="dense">
-                    <InputLabel>Trạng thái</InputLabel>
+                    <InputLabel>Status</InputLabel>
                     <Select
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
                     >
-                        <MenuItem value="">Chọn trạng thái</MenuItem>
+                        <MenuItem value="">Choose the Status</MenuItem>
                         {FLIGHT_STATUS.map((flight, index) => {
                             return (
                                 <MenuItem key={index} value={flight.value}>

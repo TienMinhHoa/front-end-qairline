@@ -1,27 +1,27 @@
 
 export const FLIGHT_STATUS = [
     {
-        label: "Đã lên lịch",
+        label: "Scheduled",
         value: "scheduled",
     },
     {
-        label: "Bị hoãn",
+        label: "Delayed",
         value: "delayed",
     },
     {
-        label: "Đã khởi hành",
+        label: "Departed",
         value: "departed",
     },
     {
-        label: "Đã kết thúc",
+        label: "Ended",
         value: "ended",
     },
     {
-        label: "Đã hủy",
+        label: "Cancelled",
         value: "cancelled",
     },
     {
-        label: "Chưa có thông tin",
+        label: "No status",
         value: "no_status",
     },
 ];
