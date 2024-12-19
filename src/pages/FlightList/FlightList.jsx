@@ -77,9 +77,26 @@ const FlightList = () => {
                                 <td style={tdStyle}>{flight.airportTo.name}</td>
                                 <td style={tdStyle}>{new Date(flight.departureTime).toLocaleString()}</td>
                                 <td style={tdStyle}>{new Date(flight.arrivalTime).toLocaleString()}</td>
+                                <td style={tdStyle}>
+                                    {/* Thêm nút View Details ở đây */}
+                                    <button
+                                        onClick={() => window.location.href = `/flight/${flight._id}`}
+                                        style={{
+                                            padding: '5px 10px',
+                                            backgroundColor: '#2196F3',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        View Details
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
+
                 </table>
             )}
         </div>
