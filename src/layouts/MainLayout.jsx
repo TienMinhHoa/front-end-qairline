@@ -30,7 +30,7 @@ const MainLayout = () => {
                     backgroundColor: '#f4f4f4',
                     // paddingBottom: '200px',
                     width: '100vw',
-                    // paddingBottom: '100px',
+                    marginBottom: '100px',
                 }}
             >
                 <Outlet />

@@ -9,7 +9,7 @@ function Footer() {
     return (
         <Box
             sx={{
-                position: 'relative',
+                // position: 'relative',
                 bottom: 0,
                 left: 0,
                 width: '100vw',
