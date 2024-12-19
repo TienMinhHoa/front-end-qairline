@@ -1,100 +1,365 @@
-import React from 'react'
-import { Box, Grid, Paper, Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import {
+    Container,
+    Paper,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    Button,
+    TablePagination,
+    Stack,
+} from '@mui/material'
+import { CreatePostModal } from '@/components/modals/post/CreatePostModal.jsx'
+import { EditPostModal } from '@/components/modals/post/EditPostModal.jsx'
+import { DeletePostModal } from '@/components/modals/post/DeletePostModal'
 
-const Orders = () => {
+import { createSvgIcon } from '@mui/material/utils'
+import DeleteIcon from '@mui/icons-material/Delete'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
+import {
+    createPost,
+    deletePost,
+    getListPosts,
+    updatePost,
+} from '@/services/post.js'
+
+const PlusIcon = createSvgIcon(
+    // credit: plus icon from https://heroicons.com
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 2 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+    >
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+        />
+    </svg>,
+    'Plus'
+)
+
+const initialRows = []
+
+export default function Orders() {
+    const [rows, setRows] = useState(initialRows)
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(10)
+    const [posts, setPosts] = useState([])
+    const paginationModel = { page: page, pageSize: 10 }
+
+    const [editingPost, setEditingPost] = useState(null)
+    const [deletingPost, setDeletingPost] = useState(null)
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage)
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value)
+        setPage(0)
+    }
+
+    const openCreateModal = () => {
+        setIsCreateModalOpen(true)
+    }
+
+    const fetchPostData = async (pagination) => {
+        try {
+            const response = await getListPosts(pagination)
+            setPosts(
+                response.data.map((res) => ({
+                    ...res,
+                    id: res._id,
+                    airline: 'QAirline',
+                }))
+            )
+            // console.log(posts)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        fetchPostData(paginationModel)
+    }, [])
+
+    const handleCreatePost = async (data) => {
+        try {
+            await createPost(data)
+            await fetchPostData(paginationModel)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const handleEditPost = async (data) => {
+        try {
+            await updatePost(data.id, data)
+            await fetchPostData(paginationModel)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const handleDeletePost = async (data) => {
+        try {
+            await deletePost(data.id)
+            await fetchPostData(paginationModel)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <Box
-            sx={{
-                padding: '20px',
-                backgroundColor: '#f9f9f9',
-                minHeight: '100vh',
+        <div
+            style={{
+                backgroundImage: 'url(/background.jpg)',
+                fontWeight: 'Bold',
             }}
         >
-            {/* Header */}
-            <Typography variant="h4" sx={{ marginBottom: '20px' }}>
-                Dashboard
-            </Typography>
+            <Container
+                sx={{
+                    width: '100%',
+                    height: '85vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    paddingTop: 3,
+                }}
+            >
+                <Button
+                    variant="contained"
+                    href="#contained-buttons"
+                    sx={{
+                        mb: '10px',
+                        width: '100px',
+                        backgroundColor: '#77DADA',
+                        color: '#0E4F4F',
+                        borderRadius: '50px',
+                        '&:hover': {
+                            color: 'white',
+                            backgroundColor: '#0E4F4F',
+                        },
+                    }}
+                    onClick={openCreateModal}
+                >
+                    <PlusIcon /> Add
+                </Button>
 
-            {/* Widgets */}
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ padding: '20px', textAlign: 'center' }}>
-                        <Typography variant="h6">Total Users</Typography>
-                        <Typography variant="h3" color="primary">
-                            1,234
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ padding: '20px', textAlign: 'center' }}>
-                        <Typography variant="h6">Revenue</Typography>
-                        <Typography variant="h3" color="success.main">
-                            $12,345
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ padding: '20px', textAlign: 'center' }}>
-                        <Typography variant="h6">New Orders</Typography>
-                        <Typography variant="h3" color="secondary">
-                            567
-                        </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
-
-            {/* Charts Section */}
-            <Box sx={{ marginTop: '30px' }}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                        <Paper sx={{ padding: '20px' }}>
-                            <Typography variant="h6">Sales Overview</Typography>
-                            {/* Add your chart component here */}
-                            <Box
-                                sx={{
-                                    height: '200px',
-                                    backgroundColor: '#e0e0e0',
-                                }}
-                            >
-                                Chart Placeholder
-                            </Box>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Paper sx={{ padding: '20px' }}>
-                            <Typography variant="h6">User Activity</Typography>
-                            {/* Add your chart component here */}
-                            <Box
-                                sx={{
-                                    height: '200px',
-                                    backgroundColor: '#e0e0e0',
-                                }}
-                            >
-                                Chart Placeholder
-                            </Box>
-                        </Paper>
-                    </Grid>
-                </Grid>
-            </Box>
-
-            {/* Data Table Section */}
-            <Box sx={{ marginTop: '30px' }}>
-                <Paper sx={{ padding: '20px' }}>
-                    <Typography variant="h6">Recent Transactions</Typography>
-                    {/* Add your table component here */}
-                    <Box
+                <Paper
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'auto',
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                    }}
+                >
+                    <TableContainer
                         sx={{
-                            marginTop: '10px',
-                            backgroundColor: '#e0e0e0',
-                            height: '150px',
+                            maxHeight: '75vh',
                         }}
                     >
-                        Table Placeholder
-                    </Box>
+                        <Table
+                            sx={{ backgroundColor: 'rgb(255,255,255,0.5)' }}
+                            stickyHeader
+                        >
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Title
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Description
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Images
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Type
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Action
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {posts
+                                    .slice(
+                                        page * rowsPerPage,
+                                        page * rowsPerPage + rowsPerPage
+                                    )
+                                    .map((row, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.title}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.description}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.image}
+                                            </TableCell>
+                                            <TableCell>{row.type}</TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '8px',
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() => {
+                                                        setEditingPost(row)
+                                                        setIsEditModalOpen(true)
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#77DADA',
+                                                        color: '#0E4F4F',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
+                                                            backgroundColor:
+                                                                '#0E4F4F',
+                                                            color: 'white',
+                                                        },
+                                                    }}
+                                                >
+                                                    <BorderColorIcon />
+                                                    Update
+                                                </Button>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => {
+                                                        setDeletingPost(row)
+                                                        setIsDeleteModalOpen(
+                                                            true
+                                                        )
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#FF6B6B',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
+                                                            backgroundColor:
+                                                                '#FF3B3B',
+                                                        },
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                    Delete
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <CreatePostModal
+                        open={isCreateModalOpen}
+                        onClose={() => setIsCreateModalOpen(false)}
+                        onSave={handleCreatePost}
+                    />
+                    <EditPostModal
+                        open={isEditModalOpen}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onSave={handleEditPost}
+                        postData={editingPost}
+                    />
+
+                    <DeletePostModal
+                        open={isDeleteModalOpen}
+                        onClose={() => setIsDeleteModalOpen(false)}
+                        onSave={handleDeletePost}
+                        postData={deletingPost}
+                    />
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={posts.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                 </Paper>
-            </Box>
-        </Box>
+            </Container>
+        </div>
     )
 }
-
-export default Orders
