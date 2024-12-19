@@ -9,13 +9,22 @@ function Footer() {
     return (
         <Box
             sx={{
-                backgroundColor: '#344054',
-                color: 'white',
-                width: '100%',
-                padding: '3rem 0',
+                position: 'relative',
+                bottom: 0,
+                left: 0,
+                width: '100vw',
+                height: 'auto',
+                backgroundColor: '#333',
+                color: '#fff',
+                display: 'flex',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                zIndex: 1000,
+                boxShadow: '0 -2px 5px rgba(0,0,0,0.2)',
+                // mt: '100px',
             }}
         >
-            <Container>
+            <Container sx={{ padding: '0px 0px', mt: 0 }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={4}>
                         <Typography variant="h6" gutterBottom>
