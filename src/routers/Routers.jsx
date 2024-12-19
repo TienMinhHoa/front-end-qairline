@@ -11,7 +11,7 @@ import {
     Flight,
     Aircraft,
     Airport,
-    Dashboard,
+    Dashboard, ListFlight,
 } from '@/pages'
 import { PATHS } from './path'
 import NotFound from '@/pages/NotFound'
@@ -26,7 +26,8 @@ function AppRoutes() {
                 { path: PATHS.home, element: <Home /> },
                 { path: '/payment', element: <Payment /> },
                 { path: '/shop', element: <Shop /> },
-                { path: '/booking-flight', element: <BookingFlight /> },
+                { path: '/booking-flight/:id', element: <BookingFlight /> },
+                { path: '/list-flight', element: <ListFlight /> },
                 { path: PATHS.profile, element: <Profile /> },
                 { path: '/post', element: <Post /> },
                 { path: '/flight', element: <Flight /> },
