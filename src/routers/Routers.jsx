@@ -1,4 +1,3 @@
-import { BrowserRouter, Navigate, useRoutes } from 'react-router-dom'
 import {
     BookingFlight,
     Home,
@@ -12,7 +11,9 @@ import {
     Aircraft,
     Airport,
     Dashboard,
+    BookingList, 
 } from '@/pages'
+
 import { PATHS } from './path'
 import NotFound from '@/pages/NotFound'
 import MainLayout from '@/layouts/MainLayout'
@@ -21,12 +22,13 @@ function AppRoutes() {
     return useRoutes([
         {
             path: '/',
-            element: <MainLayout />, // MainLayout sẽ bao bọc tất cả các children
+            element: <MainLayout />, // MainLayout bao bọc tất cả các children
             children: [
                 { path: PATHS.home, element: <Home /> },
                 { path: '/payment', element: <Payment /> },
                 { path: '/shop', element: <Shop /> },
                 { path: '/booking-flight', element: <BookingFlight /> },
+                { path: '/my-bookings', element: <BookingList /> }, 
                 { path: PATHS.profile, element: <Profile /> },
                 { path: '/post', element: <Post /> },
                 { path: '/flight', element: <Flight /> },
