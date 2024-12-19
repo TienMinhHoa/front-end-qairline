@@ -13,7 +13,7 @@ import {
     Aircraft,
     Airport,
     Orders,
-    ListFlight,
+    ListFlight, YourFlight, SearchOrder,
 } from '@/pages'
 import { PATHS } from './path'
 import NotFound from '@/pages/NotFound'
@@ -30,6 +30,8 @@ function AppRoutes() {
                 { path: '/shop', element: <Shop /> },
                 { path: '/booking-flight/:id', element: <BookingFlight /> },
                 { path: '/list-flight', element: <ListFlight /> },
+                { path: '/my-flight', element: <YourFlight /> },
+                { path: '/search-order', element: <SearchOrder /> },
                 { path: PATHS.profile, element: <Profile /> },
                 { path: '/post', element: <Post /> },
                 { path: '/flight', element: <Flight /> },

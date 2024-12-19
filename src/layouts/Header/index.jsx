@@ -10,15 +10,15 @@ import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { PATHS } from '@/routers/path.js'
-import { ROLES } from '@/constants/role.js'
-import { logout } from '@/stores/authSlice.js'
+import {Link, useNavigate} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {PATHS} from '@/routers/path.js'
+import {ROLES} from '@/constants/role.js'
+import {logout} from '@/stores/authSlice.js'
 
 function Header() {
     let pages = ['Home']
-    const { isAuthenticated, user } = useSelector((state) => state.auth)
+    const {isAuthenticated, user} = useSelector((state) => state.auth)
     const dispatch = useDispatch()
     let routes = ['/', '/createAuction']
     if (isAuthenticated) {
@@ -29,14 +29,14 @@ function Header() {
             pages = [
                 'Home',
                 'List Flight',
-                'Travel Information',
-                'Your Flight',
+                'Search Order',
+                'My Flight',
             ]
             routes = [
                 '/',
                 '/list-flight',
-                '/travel-information',
-                '/your-flight',
+                '/search-order',
+                '/my-flight',
             ]
         }
     }
@@ -83,7 +83,7 @@ function Header() {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: 'flex', md: 'none' },
+                            display: {xs: 'flex', md: 'none'},
                         }}
                     >
                         <IconButton
@@ -94,7 +94,7 @@ function Header() {
                             onClick={handleOpenNavMenu}
                             color="blue"
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -137,19 +137,19 @@ function Header() {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                             justifyContent: 'auto',
                         }}
                     >
                         <img
                             src="/black-logo.webp"
-                            style={{ height: '50px', margin: 'auto 0' }}
+                            style={{height: '50px', margin: 'auto 0'}}
                         />
                         {pages.map((page, index) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'black', display: 'block' }}
+                                sx={{my: 2, color: 'black', display: 'block'}}
                                 component={Link}
                                 to={routes[index]}
                             >
@@ -159,25 +159,26 @@ function Header() {
                     </Box>
 
                     <Typography
-                        sx={{ display: { xs: 'none', md: 'block' }, mr: 2 }}
+                        sx={{display: {xs: 'none', md: 'block'}, mr: 2}}
                     >
                         {localStorage.getItem('userName')}
                     </Typography>
                     {/* Avatar */}
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{flexGrow: 0}}>
                         {isAuthenticated ? (
                             <>
                                 {/* Avatar Button */}
                                 <IconButton
                                     onClick={handleOpenUserMenu}
-                                    sx={{ p: 0 }}
+                                    sx={{p: 0}}
                                 >
-                                    <Avatar alt="User Avatar" />
+                                    <Avatar src={user?.avatar}/>
+                                    <span style={{marginLeft: '5px', fontSize: 16}}>{user?.username}</span>
                                 </IconButton>
 
                                 {/* Avatar Menu */}
                                 <Menu
-                                    sx={{ mt: '45px' }}
+                                    sx={{mt: '45px'}}
                                     id="menu-appbar"
                                     anchorEl={anchorElUser}
                                     anchorOrigin={{
