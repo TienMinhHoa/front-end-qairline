@@ -1,26 +1,32 @@
-import Header from './Header'
-import Footer from './Footer'
+import Header from './Header';
+import Footer from './Footer';
 import React from 'react';
-import { Flex, Layout } from 'antd';
-import {Outlet} from "react-router";
+import { Layout } from 'antd';
+import { Outlet } from "react-router";
 
 const headerStyle = {
     textAlign: 'center',
     height: 64,
     paddingInline: 48,
+    backgroundColor: '#001529',
+    color: '#fff',
 };
 const contentStyle = {
-    marginTop: 128,
+    flex: 1,
     textAlign: 'center',
-    minHeight: 120,
+    padding: '0',
+    backgroundColor: '#f0f2f5',
 };
 const footerStyle = {
     textAlign: 'center',
-    padding: 0
+    padding: '0',
+    color: '#fff',
 };
 const layoutStyle = {
-    borderRadius: 8,
+    display: 'flex',
+    flexDirection: 'column',
     overflow: 'hidden',
+    minHeight: '100vh', // Toàn chiều cao màn hình
 };
 
 const MainLayout = () => {
@@ -32,11 +38,8 @@ const MainLayout = () => {
             <Layout.Content style={contentStyle}>
                 <Outlet />
             </Layout.Content>
-            <Layout.Footer style={footerStyle}>
-                <Footer />
-            </Layout.Footer>
         </Layout>
-    )
+    );
 }
 
-export default MainLayout
+export default MainLayout;

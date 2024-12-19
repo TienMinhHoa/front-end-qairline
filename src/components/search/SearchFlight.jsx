@@ -52,7 +52,6 @@ export const SearchFlight = () => {
                     flexDirection: 'column',
                     maxWidth: 1200,
                     gap: 2,
-                    margin: 'auto',
                     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
                 }}
             >

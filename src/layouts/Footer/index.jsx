@@ -5,26 +5,21 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 
+//
+
 function Footer() {
     return (
         <Box
             sx={{
-                // position: 'relative',
-                bottom: 0,
-                left: 0,
-                width: '100vw',
-                height: 'auto',
+                width: '100%',
                 backgroundColor: '#333',
                 color: '#fff',
-                display: 'flex',
-                // justifyContent: 'center',
-                // alignItems: 'center',
-                zIndex: 1000,
+                zIndex: 1,
                 boxShadow: '0 -2px 5px rgba(0,0,0,0.2)',
-                // mt: '100px',
+                mt: '10px',
             }}
         >
-            <Container sx={{ padding: '0px 0px', mt: 0 }}>
+            <Container sx={{ padding: '16px 0' }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={4}>
                         <Typography variant="h6" gutterBottom>
@@ -69,6 +64,8 @@ function Footer() {
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-around',
+                                alignItems: 'center',
+                                gap: '16px',
                                 maxWidth: '200px',
                                 margin: '0 auto',
                             }}
@@ -89,11 +86,12 @@ function Footer() {
                     </Grid>
                 </Grid>
                 <Box mt="3rem" textAlign="center">
-                    <Typography variant="body2">©ViVu Airline</Typography>
+                    <Typography variant="body2">© ViVu Airline</Typography>
                 </Box>
             </Container>
         </Box>
     )
 }
+
 
 export default Footer
