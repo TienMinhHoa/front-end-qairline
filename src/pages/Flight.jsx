@@ -128,12 +128,12 @@ export default function Flight() {
         >
             <Container
                 sx={{
-                    width: '90%',
+                    width: '95%',
                     height: '85vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    paddingTop: 2,
+                    paddingTop: 3,
                     // margin: '0 auto',
                     // backgroundColor: 'black',
                     // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -147,6 +147,7 @@ export default function Flight() {
                         width: '100px',
                         backgroundColor: '#77DADA',
                         color: '#0E4F4F',
+                        borderRadius: '50px',
                         '&:hover': {
                             color: 'white',
                             backgroundColor: '#0E4F4F',
@@ -173,22 +174,14 @@ export default function Flight() {
                         }}
                     >
                         <Table
-                            sx={{ backgroundColor: 'rgb(255,255,255,0.5)' }}
+                            sx={{
+                                backgroundColor: 'rgb(255,255,255,0.5)',
+                                display: 'block',
+                            }}
                             stickyHeader
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        Number
-                                    </TableCell>
                                     <TableCell
                                         sx={{
                                             position: 'sticky',
@@ -210,17 +203,6 @@ export default function Flight() {
                                         }}
                                     >
                                         PlaneCode
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        capacity
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -316,34 +298,85 @@ export default function Flight() {
                                     )
                                     .map((row, index) => (
                                         <TableRow key={index}>
-                                            <TableCell>{row.number}</TableCell>
-                                            <TableCell>{row.name}</TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
                                                 {row.planeCode}
                                             </TableCell>
-                                            <TableCell>
-                                                {row.capacity}
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
+                                                {row.price}
                                             </TableCell>
-                                            <TableCell>{row.price}</TableCell>
-                                            <TableCell>{row.status}</TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
+                                                {row.status}
+                                            </TableCell>
 
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
                                                 {row.airportFrom}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
                                                 {row.airportTo}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    // maxWidth: '100px',
+                                                    width: 'auto',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
                                                 {row.departureTime}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    wordWrap: 'break-word',
+                                                    maxWidth: '100px',
+                                                    whiteSpace: 'normal',
+                                                }}
+                                            >
                                                 {row.arrivalTime}
                                             </TableCell>
 
                                             <TableCell>
                                                 <Stack
                                                     direction="row"
-                                                    spacing={2}
+                                                    spacing={1}
                                                 >
                                                     <Button
                                                         sx={{

@@ -128,12 +128,14 @@ export default function Post() {
         >
             <Container
                 sx={{
+                    position: 'relative',
                     width: '90%',
-                    height: '85vh',
+                    height: '100vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    paddingTop: 2,
+                    paddingTop: 3,
+                    paddingBottom: 3,
                     // margin: '0 auto',
                     // backgroundColor: 'black',
                     // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -147,6 +149,7 @@ export default function Post() {
                         width: '100px',
                         backgroundColor: '#77DADA',
                         color: '#0E4F4F',
+                        borderRadius: '50px',
                         '&:hover': {
                             color: 'white',
                             backgroundColor: '#0E4F4F',
@@ -169,7 +172,7 @@ export default function Post() {
                 >
                     <TableContainer
                         sx={{
-                            maxHeight: '60vh',
+                            maxHeight: '75vh',
                         }}
                     >
                         <Table

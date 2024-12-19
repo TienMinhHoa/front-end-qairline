@@ -68,11 +68,14 @@ function Header() {
     return (
         <AppBar
             sx={{
-                position: 'relative',
-                // zIndex:9999,
+                position: 'absolute',
+                top: 0,
+                // bottom: '10px',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '10px',
                 backgroundColor: 'white',
                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-                // width: '100%',
             }}
         >
             <Container maxWidth="xl">
@@ -135,7 +138,7 @@ function Header() {
                         sx={{
                             flexGrow: 1,
                             display: { xs: 'none', md: 'flex' },
-                            justifyContent: 'left',
+                            justifyContent: 'auto',
                         }}
                     >
                         <img
