@@ -136,9 +136,6 @@ export default function Post() {
                     alignItems: 'center',
                     paddingTop: 3,
                     paddingBottom: 3,
-                    // margin: '0 auto',
-                    // backgroundColor: 'black',
-                    // backgroundColor: 'rgb(255,255,255,0.5)',
                 }}
             >
                 <Button
@@ -165,7 +162,6 @@ export default function Post() {
                         width: '100%',
                         height: '100%',
                         overflow: 'auto',
-                        // backgroundColor: 'rgb(255,255,255,0.5)',
                         backgroundColor: 'transparent',
                         boxShadow: 'none',
                     }}
@@ -186,7 +182,8 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
                                         }}
                                     >
                                         Title
@@ -196,7 +193,8 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
                                         }}
                                     >
                                         Description
@@ -206,7 +204,8 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
                                         }}
                                     >
                                         Images
@@ -216,7 +215,8 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
                                         }}
                                     >
                                         Type
@@ -226,17 +226,12 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
                                         }}
-                                    ></TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor: 'rgb(255,255,255)',
-                                        }}
-                                    ></TableCell>
+                                    >
+                                        Action
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -247,11 +242,36 @@ export default function Post() {
                                     )
                                     .map((row, index) => (
                                         <TableRow key={index}>
-                                            <TableCell>{row.title}</TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.title}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
                                                 {row.description}
                                             </TableCell>
-                                            <TableCell>{row.image}</TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.image}
+                                            </TableCell>
                                             <TableCell>{row.type}</TableCell>
                                             <TableCell
                                                 sx={{

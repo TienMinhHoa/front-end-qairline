@@ -82,7 +82,7 @@ export default function Aircraft() {
                     airline: 'QAirline',
                 }))
             )
-            // console.log(posts)
+            // console.log(Flights)
         } catch (e) {
             console.log(e)
         }
@@ -239,16 +239,9 @@ export default function Aircraft() {
                                             backgroundColor:
                                                 'rgb(255,255,255,0.5)',
                                         }}
-                                    ></TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    ></TableCell>
+                                    >
+                                        Action
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -259,79 +252,110 @@ export default function Aircraft() {
                                     )
                                     .map((row, index) => (
                                         <TableRow key={index}>
-                                            <TableCell>{row.name}</TableCell>
-                                            <TableCell>{row.code}</TableCell>
-                                            <TableCell>{row.engine}</TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.code}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {row.engine}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
                                                 {row.maxSpeed}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
                                                 {row.numberOfSeats}
                                             </TableCell>
-                                            <TableCell>
-                                                <Stack
-                                                    direction="row"
-                                                    spacing={2}
+                                            <TableCell
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '8px',
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() => {
+                                                        setEditingAircraft(row)
+                                                        setIsEditModalOpen(true)
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#77DADA',
+                                                        color: '#0E4F4F',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
+                                                            backgroundColor:
+                                                                '#0E4F4F',
+                                                            color: 'white',
+                                                        },
+                                                    }}
                                                 >
-                                                    <Button
-                                                        sx={{
+                                                    <BorderColorIcon />
+                                                    Update
+                                                </Button>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => {
+                                                        setDeletingAircraft(row)
+                                                        setIsDeleteModalOpen(
+                                                            true
+                                                        )
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#FF6B6B',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
                                                             backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <DeleteIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setDeletingAircraft(
-                                                                row
-                                                            )
-                                                            setIsDeleteModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Delete
-                                                    </Button>
-                                                    <Button
-                                                        sx={{
-                                                            backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <BorderColorIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setEditingAircraft(
-                                                                row
-                                                            )
-                                                            setIsEditModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Update
-                                                    </Button>
-                                                </Stack>
+                                                                '#FF3B3B',
+                                                        },
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                    Delete
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}

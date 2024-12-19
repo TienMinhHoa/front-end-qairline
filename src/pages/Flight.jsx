@@ -25,7 +25,7 @@ import {
     getListFlights,
     updateFlight,
 } from '@/services/flight.js'
-
+import { getAirportCodeLabel } from '@/utils/helpers/getAirportCodeLabel'
 const PlusIcon = createSvgIcon(
     // credit: plus icon from https://heroicons.com
     <svg
@@ -128,7 +128,7 @@ export default function Flight() {
         >
             <Container
                 sx={{
-                    width: '95%',
+                    width: '100%',
                     height: '85vh',
                     display: 'flex',
                     flexDirection: 'column',
@@ -160,7 +160,7 @@ export default function Flight() {
 
                 <Paper
                     sx={{
-                        width: 'auto%',
+                        width: '100%',
                         height: '100%',
                         overflow: 'auto',
                         // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -176,11 +176,10 @@ export default function Flight() {
                         <Table
                             sx={{
                                 backgroundColor: 'rgb(255,255,255,0.5)',
-                                display: 'block',
                             }}
                             stickyHeader
                         >
-                            <TableHead>
+                            <TableHead sx={{}}>
                                 <TableRow>
                                     <TableCell
                                         sx={{
@@ -278,7 +277,9 @@ export default function Flight() {
                                             backgroundColor:
                                                 'rgb(255,255,255,0.5)',
                                         }}
-                                    ></TableCell>
+                                    >
+                                        Action
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -291,36 +292,40 @@ export default function Flight() {
                                         <TableRow key={index}>
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
                                                 {row.name}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
                                                 {row.planeCode}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
                                                 {row.price}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
                                                 {row.status}
@@ -328,12 +333,15 @@ export default function Flight() {
 
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
-                                                {row.airportFrom}
+                                                {getAirportCodeLabel(
+                                                    row.airportFrom
+                                                )}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
@@ -344,7 +352,9 @@ export default function Flight() {
                                                     overflow: 'hidden',
                                                 }}
                                             >
-                                                {row.airportTo}
+                                                {getAirportCodeLabel(
+                                                    row.airportTo
+                                                )}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
@@ -376,14 +386,16 @@ export default function Flight() {
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
-                                                    onClick={() =>
-                                                        handleUpdate(row.id)
-                                                    }
+                                                    onClick={() => {
+                                                        setEditingFlight(row)
+                                                        setIsEditModalOpen(true)
+                                                    }}
                                                     sx={{
+                                                        width: '100px',
                                                         backgroundColor:
                                                             '#77DADA',
                                                         color: '#0E4F4F',
-                                                        borderRadius: '10px',
+                                                        borderRadius: '20px',
                                                         '&:hover': {
                                                             backgroundColor:
                                                                 '#0E4F4F',
@@ -391,25 +403,31 @@ export default function Flight() {
                                                         },
                                                     }}
                                                 >
+                                                    <BorderColorIcon />
                                                     Update
                                                 </Button>
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    onClick={() =>
-                                                        handleDelete(row.id)
-                                                    }
+                                                    onClick={() => {
+                                                        setDeletingFlight(row)
+                                                        setIsDeleteModalOpen(
+                                                            true
+                                                        )
+                                                    }}
                                                     sx={{
+                                                        width: '100px',
                                                         backgroundColor:
                                                             '#FF6B6B',
                                                         color: 'white',
-                                                        borderRadius: '10px',
+                                                        borderRadius: '20px',
                                                         '&:hover': {
                                                             backgroundColor:
                                                                 '#FF3B3B',
                                                         },
                                                     }}
                                                 >
+                                                    <DeleteIcon />
                                                     Delete
                                                 </Button>
                                             </TableCell>

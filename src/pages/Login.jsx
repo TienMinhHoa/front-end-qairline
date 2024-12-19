@@ -105,6 +105,7 @@ const LoginPage = () => {
                             // ),
                             sx: {
                                 // po
+                                padding: '3px',
                                 borderRadius: '10px',
                                 width: '50%',
                             },
@@ -137,6 +138,7 @@ const LoginPage = () => {
                                 </InputAdornment>
                             ),
                             sx: {
+                                padding: '3px',
                                 borderRadius: '10px',
                                 width: '50%',
                             },
