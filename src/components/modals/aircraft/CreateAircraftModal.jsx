@@ -9,6 +9,7 @@ import {
     MenuItem,
     Select,
     TextField,
+    Box,
 } from '@mui/material'
 import React, { useState } from 'react'
 
@@ -46,12 +47,21 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
     }
 
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Thêm máy bay</DialogTitle>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperProps={{
+                sx: {
+                    borderRadius: '45px', // Bo tròn các góc của Dialog
+                },
+            }}
+            s
+        >
+            <DialogTitle>Add new Plane</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
-                    label="Tên máy bay"
+                    label="Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -59,7 +69,7 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Mã máy bay"
+                    label="Code"
                     name="code"
                     value={formData.code}
                     onChange={handleChange}
@@ -67,7 +77,7 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Động cơ"
+                    label="Engine"
                     name="engine"
                     value={formData.engine}
                     onChange={handleChange}
@@ -75,7 +85,7 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Tốc độ tối đa (km/h)"
+                    label="Max speed (km/h)"
                     name="maxSpeed"
                     value={formData.maxSpeed}
                     onChange={handleChange}
@@ -85,7 +95,7 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                 <div style={{ display: 'flex' }}>
                     <TextField
                         margin="dense"
-                        label="Số ghế (tối thiểu)"
+                        label="Min seats"
                         name="seatFrom"
                         value={formData.seatFrom}
                         onChange={handleChange}
@@ -94,7 +104,7 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                     <div style={{ flexGrow: 1 }}></div>
                     <TextField
                         margin="dense"
-                        label="Số ghế (tối đa)"
+                        label="Max seats"
                         name="seatTo"
                         value={formData.seatTo}
                         onChange={handleChange}
@@ -102,13 +112,13 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                     />
                 </div>
                 <FormControl fullWidth margin="dense">
-                    <InputLabel>Hãng hàng không</InputLabel>
+                    <InputLabel>Airline brand</InputLabel>
                     <Select
                         name="airline"
                         value={formData.airline}
                         onChange={handleChange}
                     >
-                        <MenuItem value="">Chọn hãng hàng không</MenuItem>
+                        <MenuItem value="">Choose the Airline brand</MenuItem>
                         <MenuItem value="675e56c30926be1e4b2eb024">
                             QAirline
                         </MenuItem>
@@ -116,10 +126,45 @@ export const CreateAircraftModal = ({ open, onClose, onSave }) => {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Hủy</Button>
-                <Button onClick={handleSave} color="primary">
-                    Lưu
-                </Button>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            color: '#0E4F4F',
+                            borderRadius: '50px',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            borderRadius: '50px',
+                            color: '#0E4F4F',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={handleSave}
+                        color="primary"
+                    >
+                        Save
+                    </Button>
+                </Box>
             </DialogActions>
         </Dialog>
     )

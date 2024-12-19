@@ -1,5 +1,7 @@
 import {
     Button,
+    Container,
+    Box,
     Dialog,
     DialogActions,
     DialogContent,
@@ -8,37 +10,45 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    TextField
-} from "@mui/material";
-import React, {useState} from "react";
-import {POST_TYPE} from "@/constants/postType.js";
+    TextField,
+} from '@mui/material'
+import React, { useState } from 'react'
+import { POST_TYPE } from '@/constants/postType.js'
 
-export const CreatePostModal = ({open, onClose, onSave}) => {
+export const CreatePostModal = ({ open, onClose, onSave }) => {
     const initForm = {
         title: '',
         description: '',
         image: '',
-        type: ''
+        type: '',
     }
-    const [formData, setFormData] = useState(initForm);
+    const [formData, setFormData] = useState(initForm)
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target
         setFormData((prevState) => ({
             ...prevState,
             [name]: value,
-        }));
-    };
+        }))
+    }
 
     const handleSave = () => {
-        onSave(formData);
-        onClose();
-        setFormData(initForm);
-    };
+        onSave(formData)
+        onClose()
+        setFormData(initForm)
+    }
 
     return (
-        <Dialog open={open} onClose={onClose} >
-            <DialogTitle >Add a new post</DialogTitle>
-            <DialogContent >
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperProps={{
+                sx: {
+                    borderRadius: '45px', // Bo tròn các góc của Dialog
+                },
+            }}
+        >
+            <DialogTitle>Add a new post</DialogTitle>
+            <DialogContent>
                 <TextField
                     margin="dense"
                     label="Title"
@@ -84,7 +94,7 @@ export const CreatePostModal = ({open, onClose, onSave}) => {
                         name="type"
                         value={formData.type}
                         onChange={handleChange}
-                        sx={{borderRadius:'50px'}}
+                        sx={{ borderRadius: '50px' }}
                     >
                         <MenuItem value="">Choose type of post</MenuItem>
                         {POST_TYPE.map((type, index) => {
@@ -98,16 +108,45 @@ export const CreatePostModal = ({open, onClose, onSave}) => {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button sx={{backgroundColor:'#77DADA',color:'#0E4F4F',borderRadius:'50px','&:hover':{
-                    backgroundColor:'#0E4F4F',
-                    color:'white'
-                }}} onClick={onClose}>Cancel</Button>
-                <Button sx={{backgroundColor:'#77DADA',borderRadius:'50px',color:'#0E4F4F','&:hover':{
-                    backgroundColor:'#0E4F4F',
-                    color:'white'
-                }}} onClick={handleSave} color="primary">
-                    Save
-                </Button>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            color: '#0E4F4F',
+                            borderRadius: '50px',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            borderRadius: '50px',
+                            color: '#0E4F4F',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={handleSave}
+                        color="primary"
+                    >
+                        Save
+                    </Button>
+                </Box>
             </DialogActions>
         </Dialog>
     )

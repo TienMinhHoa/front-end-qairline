@@ -23,8 +23,8 @@ function Header() {
     let routes = ['/', '/createAuction']
     if (isAuthenticated) {
         if (user?.role === ROLES.ADMIN) {
-            pages = ['Home', 'Post', 'Flight ', 'Aircraft', 'Dashboard']
-            routes = ['/', '/post', '/flight', '/aircraft', 'dashboard']
+            pages = ['Home', 'Post', 'Flight ', 'Aircraft', 'Orders']
+            routes = ['/', '/post', '/flight', '/aircraft', '/orders']
         } else {
             pages = [
                 'Home',

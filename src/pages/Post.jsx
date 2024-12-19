@@ -186,8 +186,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     >
                                         Title
@@ -197,8 +196,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     >
                                         Description
@@ -208,8 +206,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     >
                                         Images
@@ -219,8 +216,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     >
                                         Type
@@ -230,8 +226,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     ></TableCell>
                                     <TableCell
@@ -239,8 +234,7 @@ export default function Post() {
                                             position: 'sticky',
                                             top: 0,
                                             zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
+                                            backgroundColor: 'rgb(255,255,255)',
                                         }}
                                     ></TableCell>
                                 </TableRow>
@@ -259,66 +253,60 @@ export default function Post() {
                                             </TableCell>
                                             <TableCell>{row.image}</TableCell>
                                             <TableCell>{row.type}</TableCell>
-                                            <TableCell>
-                                                <Stack
-                                                    direction="row"
-                                                    spacing={2}
+                                            <TableCell
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '8px',
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() => {
+                                                        setEditingPost(row)
+                                                        setIsEditModalOpen(true)
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#77DADA',
+                                                        color: '#0E4F4F',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
+                                                            backgroundColor:
+                                                                '#0E4F4F',
+                                                            color: 'white',
+                                                        },
+                                                    }}
                                                 >
-                                                    <Button
-                                                        sx={{
+                                                    <BorderColorIcon />
+                                                    Update
+                                                </Button>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => {
+                                                        setDeletingPost(row)
+                                                        setIsDeleteModalOpen(
+                                                            true
+                                                        )
+                                                    }}
+                                                    sx={{
+                                                        width: '100px',
+                                                        backgroundColor:
+                                                            '#FF6B6B',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        '&:hover': {
                                                             backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <DeleteIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setDeletingPost(row)
-                                                            setIsDeleteModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Delete
-                                                    </Button>
-                                                    <Button
-                                                        sx={{
-                                                            backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <BorderColorIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setEditingPost(row)
-                                                            setIsEditModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Update
-                                                    </Button>
-                                                </Stack>
+                                                                '#FF3B3B',
+                                                        },
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                    Delete
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}

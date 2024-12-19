@@ -5,6 +5,7 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
+    Box,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
@@ -53,12 +54,20 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
     }, [planeData])
 
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Chỉnh sửa máy bay</DialogTitle>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperProps={{
+                sx: {
+                    borderRadius: '45px', // Bo tròn các góc của Dialog
+                },
+            }}
+        >
+            <DialogTitle>Edit the Plane</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
-                    label="Tên máy bay"
+                    label="Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -66,7 +75,7 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Mã máy bay"
+                    label="Code"
                     name="code"
                     value={formData.code}
                     onChange={handleChange}
@@ -74,7 +83,7 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Động cơ"
+                    label="Engine"
                     name="engine"
                     value={formData.engine}
                     onChange={handleChange}
@@ -82,7 +91,7 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Tốc độ tối đa"
+                    label="Max Speed"
                     name="maxSpeed"
                     value={formData.maxSpeed}
                     onChange={handleChange}
@@ -91,7 +100,7 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                 <div style={{ display: 'flex' }}>
                     <TextField
                         margin="dense"
-                        label="Số ghế (tối thiểu)"
+                        label="Min seats"
                         name="seatFrom"
                         value={seatFrom}
                         onChange={(e) => setSeatFrom(e.target.value)}
@@ -100,7 +109,7 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                     <div style={{ flexGrow: 1 }}></div>
                     <TextField
                         margin="dense"
-                        label="Số ghế (tối đa)"
+                        label="Max seats"
                         name="seatTo"
                         value={seatTo}
                         onChange={(e) => setSeatTo(e.target.value)}
@@ -109,10 +118,45 @@ export const EditAircraftModal = ({ open, onClose, planeData, onSave }) => {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Hủy</Button>
-                <Button onClick={handleSave} color="primary">
-                    Lưu
-                </Button>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            color: '#0E4F4F',
+                            borderRadius: '50px',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            borderRadius: '50px',
+                            color: '#0E4F4F',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={handleSave}
+                        color="primary"
+                    >
+                        Save
+                    </Button>
+                </Box>
             </DialogActions>
         </Dialog>
     )

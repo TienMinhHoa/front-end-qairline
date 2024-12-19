@@ -9,6 +9,7 @@ import {
     MenuItem,
     Select,
     TextField,
+    Box,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -135,25 +136,33 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
         }
     }, [flightData])
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Sửa chuyến bay</DialogTitle>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperProps={{
+                sx: {
+                    borderRadius: '45px', // Bo tròn các góc của Dialog
+                },
+            }}
+        >
+            <DialogTitle>Edit the flight</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
-                    label="Tên chuyến bay"
+                    label="Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     fullWidth
                 />
                 <FormControl fullWidth margin="dense">
-                    <InputLabel>Máy bay</InputLabel>
+                    <InputLabel>Plane</InputLabel>
                     <Select
                         name="planeCode"
                         value={formData.planeCode}
                         onChange={handleChange}
                     >
-                        <MenuItem value="">Chọn máy bay</MenuItem>
+                        <MenuItem value="">Choose the Plane</MenuItem>
                         {planes.map((plane, index) => {
                             return (
                                 <MenuItem key={index} value={plane.code}>
@@ -218,13 +227,15 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                 </FormControl>
                 <div style={{ display: 'flex', gap: 20 }}>
                     <FormControl fullWidth margin="dense">
-                        <InputLabel>Nơi cất cánh</InputLabel>
+                        <InputLabel>From</InputLabel>
                         <Select
                             name="airportFrom"
                             value={formData.airportFrom}
                             onChange={handleChange}
                         >
-                            <MenuItem value="">Chọn nơi cất cánh</MenuItem>
+                            <MenuItem value="">
+                                Choose the begin Airport
+                            </MenuItem>
                             {airports.map((airport, index) => {
                                 return (
                                     <MenuItem key={index} value={airport._id}>
@@ -236,13 +247,13 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                     </FormControl>
                     <div style={{ flexGrow: 1 }}></div>
                     <FormControl fullWidth margin="dense">
-                        <InputLabel>Nơi hạ cánh</InputLabel>
+                        <InputLabel>To</InputLabel>
                         <Select
                             name="airportTo"
                             value={formData.airportTo}
                             onChange={handleChange}
                         >
-                            <MenuItem value="">Chọn nơi hạ cánh</MenuItem>
+                            <MenuItem value="">Choose the destination</MenuItem>
                             {airports.map((airport, index) => {
                                 return (
                                     <MenuItem key={index} value={airport._id}>
@@ -260,7 +271,7 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                     >
                         <div style={{ display: 'flex' }}>
                             <DateTimePicker
-                                label="Thời gian cất cánh"
+                                label="Departure time"
                                 name="departureTime"
                                 timezone="Asia/Ho_Chi_Minh"
                                 onChange={(e) =>
@@ -273,7 +284,7 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                             />
                             <div style={{ flexGrow: 1 }}></div>
                             <DateTimePicker
-                                label="Thời gian hạ cánh"
+                                label="Arrival time"
                                 name="arrivalTime"
                                 timezone="Asia/Ho_Chi_Minh"
                                 onChange={(e) =>
@@ -289,10 +300,45 @@ export const EditFlightModal = ({ open, onClose, flightData, onSave }) => {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Hủy</Button>
-                <Button onClick={handleSave} color="primary">
-                    Lưu
-                </Button>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            color: '#0E4F4F',
+                            borderRadius: '50px',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        sx={{
+                            backgroundColor: '#77DADA',
+                            borderRadius: '50px',
+                            color: '#0E4F4F',
+                            margin: '10px',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        onClick={handleSave}
+                        color="primary"
+                    >
+                        Save
+                    </Button>
+                </Box>
             </DialogActions>
         </Dialog>
     )

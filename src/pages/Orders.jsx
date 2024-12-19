@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Grid, Paper, Typography } from '@mui/material'
 
-const Dashboard = () => {
+const Orders = () => {
     return (
         <Box
             sx={{
@@ -97,4 +97,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Orders

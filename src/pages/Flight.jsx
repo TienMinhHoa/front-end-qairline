@@ -160,7 +160,7 @@ export default function Flight() {
 
                 <Paper
                     sx={{
-                        width: '100%',
+                        width: 'auto%',
                         height: '100%',
                         overflow: 'auto',
                         // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -279,15 +279,6 @@ export default function Flight() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     ></TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    ></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -346,9 +337,11 @@ export default function Flight() {
                                             </TableCell>
                                             <TableCell
                                                 sx={{
-                                                    wordWrap: 'break-word',
+                                                    // wordWrap: 'break-word',
                                                     maxWidth: '100px',
-                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
                                                 }}
                                             >
                                                 {row.airportTo}
@@ -356,7 +349,7 @@ export default function Flight() {
                                             <TableCell
                                                 sx={{
                                                     wordWrap: 'break-word',
-                                                    // maxWidth: '100px',
+                                                    maxWidth: '100px',
                                                     width: 'auto',
                                                     whiteSpace: 'normal',
                                                 }}
@@ -373,70 +366,52 @@ export default function Flight() {
                                                 {row.arrivalTime}
                                             </TableCell>
 
-                                            <TableCell>
-                                                <Stack
-                                                    direction="row"
-                                                    spacing={1}
+                                            <TableCell
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '8px',
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() =>
+                                                        handleUpdate(row.id)
+                                                    }
+                                                    sx={{
+                                                        backgroundColor:
+                                                            '#77DADA',
+                                                        color: '#0E4F4F',
+                                                        borderRadius: '10px',
+                                                        '&:hover': {
+                                                            backgroundColor:
+                                                                '#0E4F4F',
+                                                            color: 'white',
+                                                        },
+                                                    }}
                                                 >
-                                                    <Button
-                                                        sx={{
+                                                    Update
+                                                </Button>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() =>
+                                                        handleDelete(row.id)
+                                                    }
+                                                    sx={{
+                                                        backgroundColor:
+                                                            '#FF6B6B',
+                                                        color: 'white',
+                                                        borderRadius: '10px',
+                                                        '&:hover': {
                                                             backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <DeleteIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setDeletingFlight(
-                                                                row
-                                                            )
-                                                            setIsDeleteModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Delete
-                                                    </Button>
-                                                    <Button
-                                                        sx={{
-                                                            backgroundColor:
-                                                                '#77DADA',
-                                                            color: '#0E4F4F',
-                                                            borderRadius:
-                                                                '50px',
-                                                            left: '200px',
-                                                            '&:hover': {
-                                                                backgroundColor:
-                                                                    '#0E4F4F',
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        variant="outlined"
-                                                        startIcon={
-                                                            <BorderColorIcon />
-                                                        }
-                                                        onClick={() => {
-                                                            setEditingFlight(
-                                                                row
-                                                            )
-                                                            setIsEditModalOpen(
-                                                                true
-                                                            )
-                                                        }}
-                                                    >
-                                                        Update
-                                                    </Button>
-                                                </Stack>
+                                                                '#FF3B3B',
+                                                        },
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}
