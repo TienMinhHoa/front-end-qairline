@@ -1,51 +1,41 @@
 import Header from './Header'
 import Footer from './Footer'
-import { Outlet } from 'react-router-dom'
-import Box from '@mui/material/Box'
+import React from 'react';
+import { Flex, Layout } from 'antd';
+import {Outlet} from "react-router";
+
+const headerStyle = {
+    textAlign: 'center',
+    height: 64,
+    paddingInline: 48,
+};
+const contentStyle = {
+    marginTop: 128,
+    textAlign: 'center',
+    minHeight: 120,
+};
+const footerStyle = {
+    textAlign: 'center',
+    padding: 0
+};
+const layoutStyle = {
+    borderRadius: 8,
+    overflow: 'hidden',
+};
 
 const MainLayout = () => {
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh', // Full chiều cao màn hình
-            }}
-        >
-            <Box
-                sx={{
-                    backgroundColor: 'transparent',
-                    color: '#fff',
-                    textAlign: 'center',
-                }}
-            >
+        <Layout style={layoutStyle}>
+            <Layout.Header style={headerStyle}>
                 <Header />
-            </Box>
-
-            <Box
-                style={{
-                    flex: 1,
-                    // minHeight: 'calc(100vh - 110px)',
-                    paddingTop: '50px',
-                    backgroundColor: '#f4f4f4',
-                    // paddingBottom: '200px',
-                    width: '100vw',
-                    marginBottom: '100px',
-                }}
-            >
+            </Layout.Header>
+            <Layout.Content style={contentStyle}>
                 <Outlet />
-            </Box>
-            <Box
-                sx={{
-                    backgroundColor: 'black',
-                    // padding: '10px',
-                    textAlign: 'center',
-                    bottom: 0,
-                }}
-            >
+            </Layout.Content>
+            <Layout.Footer style={footerStyle}>
                 <Footer />
-            </Box>
-        </Box>
+            </Layout.Footer>
+        </Layout>
     )
 }
 

@@ -128,14 +128,12 @@ export default function Post() {
         >
             <Container
                 sx={{
-                    position: 'relative',
-                    width: '90%',
-                    height: '100vh',
+                    width: '100%',
+                    height: '85vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     paddingTop: 3,
-                    paddingBottom: 3,
                 }}
             >
                 <Button

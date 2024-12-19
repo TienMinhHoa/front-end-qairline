@@ -106,7 +106,6 @@ body{
 .sign-up{
     left: 0;
     width: 50%;
-    opacity: 0;
     z-index: 1;
 }
 

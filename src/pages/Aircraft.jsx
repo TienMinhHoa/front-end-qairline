@@ -128,8 +128,8 @@ export default function Aircraft() {
         >
             <Container
                 sx={{
-                    width: '90%',
-                    height: '100vh',
+                    width: '100%',
+                    height: '85vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',

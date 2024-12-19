@@ -35,7 +35,7 @@ const Home = () => {
                         textAlign="center"
                         sx={{ fontWeight: 'bold', fontSize: 32 }}
                     >
-                        Tìm chuyến bay
+                        Search Flight
                     </Typography>
                     <SearchFlight />
                 </Box>
