@@ -27,9 +27,9 @@ export const DeleteOrderModal = ({ open, onClose, orderData, onSave }) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Remove Order</DialogTitle>
+            <DialogTitle>Cancel Booking</DialogTitle>
             <DialogContent>
-                Do you want to remove Order with code
+                Do you want to cancel booking with
                 <strong> {formData?.code} </strong>?
             </DialogContent>
             <DialogActions>

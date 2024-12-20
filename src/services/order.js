@@ -28,3 +28,8 @@ export const checkOrderStatus = async (payload) => {
 export const getOrderByBookingId = async (bookingId) => {
     return (await http.get(ORDER_API.ORDER_BY_BOOKING(bookingId))).data
 }
+
+export const updateOrder = async (bookingId, payload) => {
+    return (await http.put(ORDER_API.UPDATE_ORDER(bookingId), payload)).data
+}
+

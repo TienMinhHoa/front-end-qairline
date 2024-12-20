@@ -20,3 +20,7 @@ export const updateBooking = async (id, payload) => {
 export const deleteBooking = async (id) => {
     return (await http.delete(BOOKING_API.DELETE_BOOKING(id))).data
 }
+
+export const cancelBooking = async (id) => {
+    return (await http.post(BOOKING_API.CANCEL_BOOKING(id), {})).data
+}

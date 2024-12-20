@@ -24,7 +24,7 @@ import { EditOrderModal } from '@/components/modals/order/EditOrderModal'
 import { createSvgIcon } from '@mui/material/utils'
 import DeleteIcon from '@mui/icons-material/Delete'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-import { deleteOrder, getListOrders } from '@/services/order.js'
+import {deleteOrder, getListOrders, updateOrder} from '@/services/order.js'
 
 const PlusIcon = createSvgIcon(
     // credit: plus icon from https://heroicons.com

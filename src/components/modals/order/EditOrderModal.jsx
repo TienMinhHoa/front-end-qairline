@@ -3,40 +3,62 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, FormControl, InputLabel, MenuItem, Select,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import {ORDER_STATUS} from "@/constants/orderStatus.js";
 
 export const EditOrderModal = ({ open, onClose, orderData, onSave }) => {
-    const [formData, setFormData] = useState(
-        orderData || {
-            id: '',
-            code: '',
-        }
-    )
-    const handleSave = () => {
-        onSave(formData)
-        onClose()
+    const initForm = {
+        id: '',
+        status: ''
     }
+    const [formData, setFormData] = useState(orderData || initForm);
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSave = () => {
+        onSave(formData);
+        onClose();
+        setFormData(initForm);
+    };
 
     useEffect(() => {
         if (orderData) {
-            setFormData(orderData)
+            setFormData(orderData);
         }
-    }, [orderData])
-
+    }, [orderData]);
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Xóa bài viết</DialogTitle>
+            <DialogTitle>Update Order Status</DialogTitle>
             <DialogContent>
-                Bạn có muốn xóa thanh toán có mã là
-                <strong> {formData?.code} </strong>
-                không?
+                <FormControl fullWidth margin="dense">
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="">Choose status</MenuItem>
+                        {ORDER_STATUS.map((order, index) => {
+                            return (
+                                <MenuItem key={index} value={order.value}>
+                                    {order.label}
+                                </MenuItem>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Hủy</Button>
-                <Button onClick={handleSave} color="error">
-                    Xóa
+                <Button onClick={onClose}>cancel</Button>
+                <Button onClick={handleSave} color="primary">
+                    continue
                 </Button>
             </DialogActions>
         </Dialog>

@@ -1,55 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
+    Alert,
+    Button,
     Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Link,
     Paper,
+    Snackbar,
     Table,
+    TableBody,
+    TableCell,
     TableContainer,
     TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Button,
     TablePagination,
-    Stack,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
+    TableRow,
 } from '@mui/material'
 
-import { DeleteOrderModal } from '@/components/modals/order/DeleteOrderModal'
-import { EditOrderModal } from '@/components/modals/order/EditOrderModal'
-
-import { createSvgIcon } from '@mui/material/utils'
-import DeleteIcon from '@mui/icons-material/Delete'
-import BorderColorIcon from '@mui/icons-material/BorderColor'
-import { deleteOrder, getListOrders } from '@/services/order.js'
-
-const PlusIcon = createSvgIcon(
-    // credit: plus icon from https://heroicons.com
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 2 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4.5v15m7.5-7.5h-15"
-        />
-    </svg>,
-    'Plus'
-)
-
-const initialRows = []
+import {DeleteOrderModal} from '@/components/modals/order/DeleteOrderModal'
+import {EditOrderModal} from '@/components/modals/order/EditOrderModal'
+import {getOrderByBookingId} from '@/services/order.js'
+import {useNavigate} from "react-router-dom";
+import {cancelBooking, getListBookings} from "@/services/booking.js";
+import {getFlightById} from "@/services/flight.js";
+import {useSelector} from "react-redux";
 
 export default function YourFligt() {
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [orders, setOrders] = useState([])
-    const paginationModel = { page: page, pageSize: 10 }
+    const [flights, setFlights] = useState([])
+    const paginationModel = {page: page, pageSize: 20, perPage: 20}
+    const {user} = useSelector((state) => state.auth)
+    const [alert, setAlert] = useState({
+        open: false,
+        severity: '',
+        message: '',
+    })
+    const navigate = useNavigate()
 
     const [editingOrder, setEditingOrder] = useState(null)
     const [deletingOrder, setDeletingOrder] = useState(null)
@@ -80,38 +70,104 @@ export default function YourFligt() {
 
     const fetchOrderData = async (pagination) => {
         try {
-            const response = await getListOrders(pagination)
-            setOrders(
-                response.data.map((res) => ({
-                    ...res,
-                    id: res._id,
-                    airline: 'QAirline',
+            const response = await getListBookings(pagination)
+            const bookings = response.data
+            const flightIds = [
+                ...new Set(bookings.map((booking) => booking.flightId)),
+            ]
+            const bookingIds = [
+                ...new Set(bookings.map((booking) => booking._id)),
+            ]
+            const flightDetails = await Promise.all(
+                flightIds.map(async (flightId) => {
+                    const flightResponse = await getFlightById(flightId)
+                    return {
+                        id: flightId,
+                        flightCode: flightResponse.data.planeCode,
+                        flightNumber: flightResponse.data.number,
+                    }
+                })
+            )
+            const orderDetails = await Promise.all(
+                bookingIds.map(async (bookingId) => {
+                    const res = await getOrderByBookingId(bookingId)
+                    return {
+                        id: bookingId,
+                        orderCode:
+                            res.data && res.data.code
+                                ? res.data.code
+                                : "Don't have payment code",
+                    }
+                })
+            )
+            const flightMap = flightDetails.reduce((acc, flight) => {
+                acc[flight.id] = {
+                    flightCode: flight.flightCode,
+                    flightNumber: flight.flightNumber,
+                }
+                return acc
+            }, {})
+            const orderMap = orderDetails.reduce((acc, order) => {
+                acc[order.id] = {
+                    orderCode: order.orderCode,
+                }
+                return acc
+            }, {})
+            const bookingsWithFlightCode = bookings.map((booking) => ({
+                ...booking,
+                flightCode: flightMap[booking.flightId].flightCode,
+                flightNumber: flightMap[booking.flightId].flightNumber,
+                orderCode: orderMap[booking._id].orderCode,
+            }))
+            setFlights(
+                bookingsWithFlightCode.map((booking) => ({
+                    ...booking,
+                    id: booking._id,
                 }))
             )
-            // console.log(posts)
+            console.log(
+                bookingsWithFlightCode.map((booking) => ({
+                    ...booking,
+                    id: booking._id,
+                }))
+            )
         } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
-        fetchOrderData(paginationModel)
+        fetchOrderData({...paginationModel, userId: user._id})
     }, [])
 
     const handleEditOrder = async (data) => {
         try {
-            await updateOrder(data.id, data)
+            // await updateOrder(data.id, data)
             await fetchOrderData(paginationModel)
         } catch (e) {
             console.log(e)
         }
     }
 
+    const handleCloseAlert = () => {
+        setAlert({...alert, open: false})
+    }
+
     const handleDeleteOrder = async (data) => {
         try {
-            await deleteOrder(data.id)
-            await fetchOrderData(paginationModel)
+            const response = await cancelBooking(data.id)
+            await fetchOrderData({...paginationModel, userId: user._id})
+            setAlert({
+                open: true,
+                severity: 'success',
+                message: 'Cancel booking successfully',
+            })
         } catch (e) {
+            setAlert({
+                open: true,
+                severity: 'error',
+                message: 'Tickets can only be cancelled within 1 day of booking',
+            })
             console.log(e)
         }
     }
@@ -148,7 +204,7 @@ export default function YourFligt() {
                         }}
                     >
                         <Table
-                            sx={{ backgroundColor: 'rgb(255,255,255,0.5)' }}
+                            sx={{backgroundColor: 'rgb(255,255,255,0.5)'}}
                             stickyHeader
                         >
                             <TableHead>
@@ -162,7 +218,7 @@ export default function YourFligt() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Code
+                                        Flight Number
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -173,7 +229,7 @@ export default function YourFligt() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Booking Id
+                                        Plane Code
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -184,18 +240,7 @@ export default function YourFligt() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Total quantity
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{
-                                            position: 'sticky',
-                                            top: 0,
-                                            zIndex: 1,
-                                            backgroundColor:
-                                                'rgb(255,255,255,0.5)',
-                                        }}
-                                    >
-                                        Total price
+                                        Order Code
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -222,11 +267,8 @@ export default function YourFligt() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {orders
-                                    .slice(
-                                        page * rowsPerPage,
-                                        page * rowsPerPage + rowsPerPage
-                                    )
+                                {flights
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => (
                                         <TableRow key={index}>
                                             <TableCell
@@ -236,24 +278,11 @@ export default function YourFligt() {
                                                     whiteSpace: 'nowrap',
                                                     overflow: 'hidden',
                                                 }}
-                                                onClick={() =>
-                                                    handleCopy(row.code)
-                                                }
+                                                onClick={() => navigate(`/booking-flight/${row.flightNumber}`)}
                                             >
-                                                {row.code}
-                                            </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    maxWidth: '100px',
-                                                    textOverflow: 'ellipsis',
-                                                    whiteSpace: 'nowrap',
-                                                    overflow: 'hidden',
-                                                }}
-                                                onClick={() =>
-                                                    handleCopy(row.bookingId)
-                                                }
-                                            >
-                                                {row.bookingId}
+                                                <Link to={`/booking-flight/${row.flightNumber}`}>
+                                                    {row.flightNumber}
+                                                </Link>
                                             </TableCell>
                                             <TableCell
                                                 sx={{
@@ -263,10 +292,18 @@ export default function YourFligt() {
                                                     overflow: 'hidden',
                                                 }}
                                             >
-                                                {row.totalQuantity}
+                                                {row.flightCode}
                                             </TableCell>
-                                            <TableCell>
-                                                {row.totalPrice}
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                                onClick={() => handleCopy(row.orderCode)}
+                                            >
+                                                {row.orderCode}
                                             </TableCell>
                                             <TableCell>{row.status}</TableCell>
                                             <TableCell
@@ -278,50 +315,23 @@ export default function YourFligt() {
                                             >
                                                 <Button
                                                     variant="contained"
-                                                    color="primary"
-                                                    onClick={() => {
-                                                        setEditingOrder(row)
-                                                        setIsEditModalOpen(true)
-                                                    }}
-                                                    sx={{
-                                                        width: '100px',
-                                                        backgroundColor:
-                                                            '#77DADA',
-                                                        color: '#0E4F4F',
-                                                        borderRadius: '20px',
-                                                        '&:hover': {
-                                                            backgroundColor:
-                                                                '#0E4F4F',
-                                                            color: 'white',
-                                                        },
-                                                    }}
-                                                >
-                                                    <BorderColorIcon />
-                                                    Update
-                                                </Button>
-                                                <Button
-                                                    variant="contained"
                                                     color="secondary"
                                                     onClick={() => {
                                                         setDeletingOrder(row)
-                                                        setIsDeleteModalOpen(
-                                                            true
-                                                        )
+                                                        setIsDeleteModalOpen(true)
                                                     }}
                                                     sx={{
                                                         width: '100px',
-                                                        backgroundColor:
-                                                            '#FF6B6B',
+                                                        backgroundColor: '#FF6B6B',
                                                         color: 'white',
                                                         borderRadius: '20px',
                                                         '&:hover': {
-                                                            backgroundColor:
-                                                                '#FF3B3B',
+                                                            backgroundColor: '#FF3B3B',
                                                         },
                                                     }}
+                                                    disabled={row.status !== 'completed'}
                                                 >
-                                                    <DeleteIcon />
-                                                    Delete
+                                                    Cancel
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
@@ -356,7 +366,7 @@ export default function YourFligt() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={orders.length}
+                        count={flights.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -364,6 +374,21 @@ export default function YourFligt() {
                     />
                 </Paper>
             </Container>
+            <Snackbar
+                open={alert.open}
+                autoHideDuration={4000}
+                onClose={handleCloseAlert}
+                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                sx={{marginTop: 6}}
+            >
+                <Alert
+                    onClose={handleCloseAlert}
+                    severity={alert.severity}
+                    sx={{width: '100%'}}
+                >
+                    {alert.message}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }

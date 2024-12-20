@@ -8,7 +8,8 @@ export const AUTH_API = {
 }
 
 export const USER_API = {
-    GET_CURRENT_USER: '/user/me'
+    GET_CURRENT_USER: '/user/me',
+    UPDATE_CURRENT_USER: '/user/update',
 }
 
 export const PLANE_API = {
@@ -97,6 +98,7 @@ export const BOOKING_API = {
     UPDATE_BOOKING: (id) => `/booking/${id}`,
     BOOKING_BY_ID: (id) => `/booking/${id}`,
     BOOKING_BY_CODE: (code) => `/booking/code/${code}`,
+    CANCEL_BOOKING: (id) => `/booking/cancel/${id}`,
 }
 
 export const ORDER_API = {
@@ -112,7 +114,9 @@ export const ORDER_API = {
     },
     CREATE_ORDER: '/order',
     DELETE_ORDER: (id) => `/order/${id}`,
+    UPDATE_ORDER: (id) => `/order/${id}`,
     ORDER_BY_ID: (id) => `/order/${id}`,
     ORDER_BY_CODE: (code) => `/order/code/${code}`,
     CHECK_ORDER_STATUS: '/order/check-status',
+    ORDER_BY_BOOKING: (bookingId) => `/order/booking/${bookingId}`
 }
