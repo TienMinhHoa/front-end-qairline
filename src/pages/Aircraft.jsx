@@ -123,17 +123,19 @@ export default function Aircraft() {
         <div
             style={{
                 backgroundImage: 'url(/background.jpg)',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
                 fontWeight: 'Bold',
             }}
         >
             <Container
                 sx={{
                     width: '100%',
-                    height: '85vh',
+                    height: '100vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    paddingTop: 3,
+                    paddingTop: 8,
                 }}
             >
                 <Button

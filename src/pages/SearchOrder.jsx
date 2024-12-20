@@ -12,7 +12,9 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    InputAdornment,
 } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 import { getListOrders } from '@/services/order'
 import { numberWithComas } from '@/utils/helpers/numberWithComas'
 import { getFlightById } from '@/services/flight'
@@ -38,7 +40,7 @@ const SearchOrder = () => {
 
     const handleSearch = async () => {
         if (!orderID) {
-            setError('Mã đặt chỗ không được để trống')
+            setError('You must fill the code')
             return
         }
 
@@ -87,80 +89,95 @@ const SearchOrder = () => {
                     maxWidth: 900,
                     margin: 'auto',
                     marginTop: '100px',
+                    borderRadius: '30px',
                 }}
             >
                 {/*<Grid container spacing={3}>*/}
-                    {/* Left Section: Search Form */}
-                    {/*<Grid item xs={12} md={6}>*/}
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 'bold',
-                                marginBottom: 2,
-                                color: '#058CB3',
-                            }}
-                        >
-                            TRA CỨU CHUYẾN BAY
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            sx={{ marginBottom: 3 }}
-                        >
-                            Bạn muốn xem chuyến bay đã đặt, vui lòng điền thông
-                            tin bên dưới
-                        </Typography>
+                {/* Left Section: Search Form */}
+                {/*<Grid item xs={12} md={6}>*/}
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontWeight: 'bold',
+                        marginBottom: 2,
+                        color: 'Black',
+                    }}
+                >
+                    Search the Ordered Flight
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    sx={{ marginBottom: 3 }}
+                >
+                    Fill the information below to search your flight
+                </Typography>
 
-                        {/* Form Inputs */}
-                        <Box component="form" autoComplete="off">
-                            <TextField
-                                fullWidth
-                                required
-                                label="Mã đặt chỗ"
-                                variant="outlined"
-                                margin="normal"
-                                value={orderID}
-                                onChange={(e) => setOrderID(e.target.value)}
-                                error={Boolean(error)} // Hiển thị trạng thái lỗi
-                                helperText={error} // Thông báo lỗi
-                            />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                sx={{
-                                    marginTop: 2,
-                                    textTransform: 'none',
-                                    fontWeight: 'bold',
-                                }}
-                                size="large"
-                                onClick={handleSearch}
-                            >
-                                Tìm kiếm
-                            </Button>
-                        </Box>
-                    {/*</Grid>*/}
+                {/* Form Inputs */}
+                <Box component="form" autoComplete="off">
+                    <TextField
+                        fullWidth
+                        required
+                        label="Code of order"
+                        variant="outlined"
+                        margin="normal"
+                        value={orderID}
+                        onChange={(e) => setOrderID(e.target.value)}
+                        error={Boolean(error)} // Hiển thị trạng thái lỗi
+                        helperText={error} // Thông báo lỗi
+                        InputProps={{
+                            sx: { borderRadius: '30px' },
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                            marginTop: 2,
+                            textTransform: 'none',
+                            fontWeight: 'bold',
+                            borderRadius: '30px',
+                            backgroundColor: '#77DADA',
+                            color: '#0E4F4F',
+                            '&:hover': {
+                                backgroundColor: '#0E4F4F',
+                                color: 'white',
+                            },
+                        }}
+                        size="large"
+                        onClick={handleSearch}
+                    >
+                        Search
+                    </Button>
+                </Box>
+                {/*</Grid>*/}
 
-                    {/* Right Section: Advertisement */}
-                    {/*<Grid item xs={12} md={6} container justifyContent="center">*/}
-                    {/*    <Box*/}
-                    {/*        sx={{*/}
-                    {/*            backgroundImage:*/}
-                    {/*                "url('https://t4.ftcdn.net/jpg/03/54/53/97/360_F_354539710_LHYPvjj0uEQk0OptcUDzrPzUo9hAoTX0.jpg')",*/}
-                    {/*            backgroundSize: 'cover',*/}
-                    {/*            borderRadius: 2,*/}
-                    {/*            height: '100%',*/}
-                    {/*            width: '100%',*/}
-                    {/*            position: 'relative',*/}
-                    {/*            display: 'flex',*/}
-                    {/*            alignItems: 'center',*/}
-                    {/*            justifyContent: 'center',*/}
-                    {/*            padding: 2,*/}
-                    {/*            textAlign: 'center',*/}
-                    {/*            color: '#fff',*/}
-                    {/*            fontWeight: 'bold',*/}
-                    {/*        }}*/}
-                    {/*    ></Box>*/}
-                    {/*</Grid>*/}
+                {/* Right Section: Advertisement */}
+                {/*<Grid item xs={12} md={6} container justifyContent="center">*/}
+                {/*    <Box*/}
+                {/*        sx={{*/}
+                {/*            backgroundImage:*/}
+                {/*                "url('https://t4.ftcdn.net/jpg/03/54/53/97/360_F_354539710_LHYPvjj0uEQk0OptcUDzrPzUo9hAoTX0.jpg')",*/}
+                {/*            backgroundSize: 'cover',*/}
+                {/*            borderRadius: 2,*/}
+                {/*            height: '100%',*/}
+                {/*            width: '100%',*/}
+                {/*            position: 'relative',*/}
+                {/*            display: 'flex',*/}
+                {/*            alignItems: 'center',*/}
+                {/*            justifyContent: 'center',*/}
+                {/*            padding: 2,*/}
+                {/*            textAlign: 'center',*/}
+                {/*            color: '#fff',*/}
+                {/*            fontWeight: 'bold',*/}
+                {/*        }}*/}
+                {/*    ></Box>*/}
+                {/*</Grid>*/}
                 {/*</Grid>*/}
             </Paper>
 
@@ -187,8 +204,8 @@ const SearchOrder = () => {
 
                             <Typography variant="body1">
                                 <strong>Chuyến đi:</strong>{' '}
-                                {getAirportCodeLabel(flightData3?.airportFrom)} →{' '}
-                                {getAirportCodeLabel(flightData3?.airportTo)}
+                                {getAirportCodeLabel(flightData3?.airportFrom)}{' '}
+                                → {getAirportCodeLabel(flightData3?.airportTo)}
                             </Typography>
                             <Typography variant="body1">
                                 <strong>Thời gian khởi hành:</strong>{' '}

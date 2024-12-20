@@ -118,22 +118,38 @@ export default function Flight() {
             console.log(e)
         }
     }
+    const formatDate = (isoString) => {
+        const date = new Date(isoString)
 
+        // Lấy ngày, tháng, năm
+        const day = date.getUTCDate().toString().padStart(2, '0')
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')
+        const year = date.getUTCFullYear()
+
+        // Lấy giờ, phút
+        const hours = date.getUTCHours().toString().padStart(2, '0')
+        const minutes = date.getUTCMinutes().toString().padStart(2, '0')
+
+        // Ghép lại theo định dạng dễ đọc
+        return `${day}/${month}/${year} ${hours}:${minutes}`
+    }
     return (
         <div
             style={{
                 backgroundImage: 'url(/background.jpg)',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
                 fontWeight: 'Bold',
             }}
         >
             <Container
                 sx={{
                     width: '100%',
-                    height: '85vh',
+                    height: '100vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    paddingTop: 3,
+                    paddingTop: 8,
                     // margin: '0 auto',
                     // backgroundColor: 'black',
                     // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -160,7 +176,7 @@ export default function Flight() {
 
                 <Paper
                     sx={{
-                        width: '100%',
+                        width: '120%',
                         height: '100%',
                         overflow: 'auto',
                         // backgroundColor: 'rgb(255,255,255,0.5)',
@@ -364,7 +380,7 @@ export default function Flight() {
                                                     whiteSpace: 'normal',
                                                 }}
                                             >
-                                                {row.departureTime}
+                                                {formatDate(row.departureTime)}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
@@ -373,7 +389,7 @@ export default function Flight() {
                                                     whiteSpace: 'normal',
                                                 }}
                                             >
-                                                {row.arrivalTime}
+                                                {formatDate(row.arrivalTime)}
                                             </TableCell>
 
                                             <TableCell

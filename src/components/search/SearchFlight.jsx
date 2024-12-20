@@ -59,11 +59,12 @@ export const SearchFlight = () => {
                 sx={{
                     padding: 3,
                     border: '2px solid hsla(0, 0%, 100%, .7)',
-                    borderRadius: '75px',
+                    borderRadius: '30px',
                     backgroundColor: '#fff',
                     display: 'flex',
                     flexDirection: 'column',
                     maxWidth: 1200,
+                    // minHeight: '200px',
                     gap: 2,
                     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
                 }}

@@ -11,20 +11,20 @@ import {
     Button,
     TablePagination,
     Stack,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
 } from '@mui/material'
-import { CreatePostModal } from '@/components/modals/post/CreatePostModal.jsx'
-import { EditPostModal } from '@/components/modals/post/EditPostModal.jsx'
-import { DeletePostModal } from '@/components/modals/post/DeletePostModal'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+
+import { DeleteOrderModal } from '@/components/modals/order/DeleteOrderModal'
+import { EditOrderModal } from '@/components/modals/order/EditOrderModal'
 
 import { createSvgIcon } from '@mui/material/utils'
 import DeleteIcon from '@mui/icons-material/Delete'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-import {
-    createPost,
-    deletePost,
-    getListPosts,
-    updatePost,
-} from '@/services/post.js'
+import { deleteOrder, getListOrders } from '@/services/order.js'
 
 const PlusIcon = createSvgIcon(
     // credit: plus icon from https://heroicons.com
@@ -47,18 +47,30 @@ const PlusIcon = createSvgIcon(
 const initialRows = []
 
 export default function Orders() {
-    const [rows, setRows] = useState(initialRows)
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
-    const [posts, setPosts] = useState([])
+    const [orders, setOrders] = useState([])
     const paginationModel = { page: page, pageSize: 10 }
 
-    const [editingPost, setEditingPost] = useState(null)
-    const [deletingPost, setDeletingPost] = useState(null)
+    const [editingOrder, setEditingOrder] = useState(null)
+    const [deletingOrder, setDeletingOrder] = useState(null)
+    const [editOrder, setEditOrder] = useState(null)
 
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
+    const [open, setOpen] = useState(false)
+    const [copiedText, setCopiedText] = useState('')
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text)
+        setCopiedText(text)
+        setOpen(true)
+        setTimeout(() => {
+            setOpen(false)
+        }, 2000) // Dialog sẽ tự động tắt sau 2 giây
+    }
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
     }
@@ -68,14 +80,10 @@ export default function Orders() {
         setPage(0)
     }
 
-    const openCreateModal = () => {
-        setIsCreateModalOpen(true)
-    }
-
-    const fetchPostData = async (pagination) => {
+    const fetchOrderData = async (pagination) => {
         try {
-            const response = await getListPosts(pagination)
-            setPosts(
+            const response = await getListOrders(pagination)
+            setOrders(
                 response.data.map((res) => ({
                     ...res,
                     id: res._id,
@@ -89,31 +97,22 @@ export default function Orders() {
     }
 
     useEffect(() => {
-        fetchPostData(paginationModel)
+        fetchOrderData(paginationModel)
     }, [])
 
-    const handleCreatePost = async (data) => {
+    const handleEditOrder = async (data) => {
         try {
-            await createPost(data)
-            await fetchPostData(paginationModel)
+            await updateOrder(data.id, data)
+            await fetchOrderData(paginationModel)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const handleEditPost = async (data) => {
+    const handleDeleteOrder = async (data) => {
         try {
-            await updatePost(data.id, data)
-            await fetchPostData(paginationModel)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const handleDeletePost = async (data) => {
-        try {
-            await deletePost(data.id)
-            await fetchPostData(paginationModel)
+            await deleteOrder(data.id)
+            await fetchOrderData(paginationModel)
         } catch (e) {
             console.log(e)
         }
@@ -123,38 +122,21 @@ export default function Orders() {
         <div
             style={{
                 backgroundImage: 'url(/background.jpg)',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
                 fontWeight: 'Bold',
             }}
         >
             <Container
                 sx={{
                     width: '100%',
-                    height: '85vh',
+                    height: '100vh',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    paddingTop: 3,
+                    paddingTop: 8,
                 }}
             >
-                <Button
-                    variant="contained"
-                    href="#contained-buttons"
-                    sx={{
-                        mb: '10px',
-                        width: '100px',
-                        backgroundColor: '#77DADA',
-                        color: '#0E4F4F',
-                        borderRadius: '50px',
-                        '&:hover': {
-                            color: 'white',
-                            backgroundColor: '#0E4F4F',
-                        },
-                    }}
-                    onClick={openCreateModal}
-                >
-                    <PlusIcon /> Add
-                </Button>
-
                 <Paper
                     sx={{
                         width: '100%',
@@ -184,7 +166,7 @@ export default function Orders() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Title
+                                        Code
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -195,7 +177,7 @@ export default function Orders() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Description
+                                        Booking Id
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -206,7 +188,7 @@ export default function Orders() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Images
+                                        Total quantity
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -217,7 +199,18 @@ export default function Orders() {
                                                 'rgb(255,255,255,0.5)',
                                         }}
                                     >
-                                        Type
+                                        Total price
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            backgroundColor:
+                                                'rgb(255,255,255,0.5)',
+                                        }}
+                                    >
+                                        Status
                                     </TableCell>
                                     <TableCell
                                         sx={{
@@ -233,7 +226,7 @@ export default function Orders() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {posts
+                                {orders
                                     .slice(
                                         page * rowsPerPage,
                                         page * rowsPerPage + rowsPerPage
@@ -247,8 +240,24 @@ export default function Orders() {
                                                     whiteSpace: 'nowrap',
                                                     overflow: 'hidden',
                                                 }}
+                                                onClick={() =>
+                                                    handleCopy(row.code)
+                                                }
                                             >
-                                                {row.title}
+                                                {row.code}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    maxWidth: '100px',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    overflow: 'hidden',
+                                                }}
+                                                onClick={() =>
+                                                    handleCopy(row.bookingId)
+                                                }
+                                            >
+                                                {row.bookingId}
                                             </TableCell>
                                             <TableCell
                                                 sx={{
@@ -258,19 +267,12 @@ export default function Orders() {
                                                     overflow: 'hidden',
                                                 }}
                                             >
-                                                {row.description}
+                                                {row.totalQuantity}
                                             </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    maxWidth: '100px',
-                                                    textOverflow: 'ellipsis',
-                                                    whiteSpace: 'nowrap',
-                                                    overflow: 'hidden',
-                                                }}
-                                            >
-                                                {row.image}
+                                            <TableCell>
+                                                {row.totalPrice}
                                             </TableCell>
-                                            <TableCell>{row.type}</TableCell>
+                                            <TableCell>{row.status}</TableCell>
                                             <TableCell
                                                 sx={{
                                                     display: 'flex',
@@ -282,7 +284,7 @@ export default function Orders() {
                                                     variant="contained"
                                                     color="primary"
                                                     onClick={() => {
-                                                        setEditingPost(row)
+                                                        setEditingOrder(row)
                                                         setIsEditModalOpen(true)
                                                     }}
                                                     sx={{
@@ -305,7 +307,7 @@ export default function Orders() {
                                                     variant="contained"
                                                     color="secondary"
                                                     onClick={() => {
-                                                        setDeletingPost(row)
+                                                        setDeletingOrder(row)
                                                         setIsDeleteModalOpen(
                                                             true
                                                         )
@@ -330,29 +332,35 @@ export default function Orders() {
                                     ))}
                             </TableBody>
                         </Table>
+                        <Dialog open={open} onClose={() => setOpen(false)}>
+                            <DialogTitle>Copied to Clipboard</DialogTitle>
+                            <DialogContent>
+                                <p>{copiedText}</p>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setOpen(false)}>
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </TableContainer>
-                    <CreatePostModal
-                        open={isCreateModalOpen}
-                        onClose={() => setIsCreateModalOpen(false)}
-                        onSave={handleCreatePost}
-                    />
-                    <EditPostModal
+                    <EditOrderModal
                         open={isEditModalOpen}
                         onClose={() => setIsEditModalOpen(false)}
-                        onSave={handleEditPost}
-                        postData={editingPost}
+                        onSave={handleEditOrder}
+                        orderData={editingOrder}
                     />
 
-                    <DeletePostModal
+                    <DeleteOrderModal
                         open={isDeleteModalOpen}
                         onClose={() => setIsDeleteModalOpen(false)}
-                        onSave={handleDeletePost}
-                        postData={deletingPost}
+                        onSave={handleDeleteOrder}
+                        orderData={deletingOrder}
                     />
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={posts.length}
+                        count={orders.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

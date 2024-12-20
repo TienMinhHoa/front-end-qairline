@@ -7,7 +7,7 @@ import {
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
-export const DeleteOrderModal = ({ open, onClose, orderData, onSave }) => {
+export const EditOrderModal = ({ open, onClose, orderData, onSave }) => {
     const [formData, setFormData] = useState(
         orderData || {
             id: '',
@@ -27,15 +27,16 @@ export const DeleteOrderModal = ({ open, onClose, orderData, onSave }) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Remove Order</DialogTitle>
+            <DialogTitle>Xóa bài viết</DialogTitle>
             <DialogContent>
-                Do you want to remove Order with code
-                <strong> {formData?.code} </strong>?
+                Bạn có muốn xóa thanh toán có mã là
+                <strong> {formData?.code} </strong>
+                không?
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose}>Hủy</Button>
                 <Button onClick={handleSave} color="error">
-                    Continue
+                    Xóa
                 </Button>
             </DialogActions>
         </Dialog>

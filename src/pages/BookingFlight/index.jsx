@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react'
 import {
     Alert,
     Box,
@@ -15,15 +15,15 @@ import {
     MenuItem,
     Select,
     Snackbar,
-    Typography
-} from "@mui/material";
-import {convertDateTime} from "@/utils/helpers/convertDateTime.js";
-import {getAirportCodeLabel} from "@/utils/helpers/getAirportCodeLabel.js";
-import {useParams} from "react-router";
-import {getFlightByNumber} from "@/services/flight.js";
-import {numberWithComas} from "@/utils/helpers/numberWithComas.js";
-import {createBooking} from "@/services/booking.js";
-import {createOrder} from "@/services/order.js";
+    Typography,
+} from '@mui/material'
+import { convertDateTime } from '@/utils/helpers/convertDateTime.js'
+import { getAirportCodeLabel } from '@/utils/helpers/getAirportCodeLabel.js'
+import { useParams } from 'react-router'
+import { getFlightByNumber } from '@/services/flight.js'
+import { numberWithComas } from '@/utils/helpers/numberWithComas.js'
+import { createBooking } from '@/services/booking.js'
+import { createOrder } from '@/services/order.js'
 
 const BookingFlight = () => {
     const flightId = useParams().id
@@ -90,15 +90,15 @@ const BookingFlight = () => {
     }
 
     const handleChange = (event) => {
-        const selectedSeatNumbers = event.target.value;
+        const selectedSeatNumbers = event.target.value
         const selectedSeatsDetails = seats.filter((seat) =>
             selectedSeatNumbers.includes(seat.seatNumber)
-        );
-        setSelectedSeats(selectedSeatsDetails);
+        )
+        setSelectedSeats(selectedSeatsDetails)
     }
 
     const handleCloseAlert = () => {
-        setAlert({...alert, open: false})
+        setAlert({ ...alert, open: false })
     }
 
     useEffect(() => {
@@ -106,23 +106,35 @@ const BookingFlight = () => {
     }, [flightId])
 
     return (
-        <div style={{padding: '20px'}}>
+        <div style={{ padding: '20px' }}>
             <Typography
                 textAlign="center"
-                sx={{fontWeight: 'bold', fontSize: 32}}
+                sx={{ fontWeight: 'bold', fontSize: 32 }}
             >
                 Flight Booking
             </Typography>
-            <div style={{display: "flex"}}>
-                <Card sx={{minWidth: '600px', marginTop: '60px'}}>
+            <div style={{ display: 'flex' }}>
+                <Card
+                    sx={{
+                        minWidth: '600px',
+                        marginTop: '60px',
+                        height: '300px',
+                    }}
+                >
                     <CardContent>
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
                             <Typography
                                 textAlign="center"
                                 gutterBottom
-                                sx={{fontWeight: 'bold', fontSize: 22}}
+                                sx={{ fontWeight: 'bold', fontSize: 22 }}
                             >
-                                Chọn thông tin để đặt vé
+                                Choose the information for booking
                             </Typography>
                         </Box>
                         <FormControl fullWidth margin="dense">
@@ -130,17 +142,26 @@ const BookingFlight = () => {
                             <Select
                                 name="seat"
                                 multiple
-                                value={selectedSeats.map((seat) => seat.seatNumber)}
+                                value={selectedSeats.map(
+                                    (seat) => seat.seatNumber
+                                )}
                                 onChange={handleChange}
-                                sx={{borderRadius: '50px'}}
+                                sx={{ borderRadius: '50px' }}
                             >
                                 <MenuItem value="">Choose seat number</MenuItem>
                                 {flight.seats &&
                                     flight.seats
-                                        .filter((seat) => seat.status === 'available')
+                                        .filter(
+                                            (seat) =>
+                                                seat.status === 'available'
+                                        )
                                         .map((seat, index) => (
-                                            <MenuItem key={index} value={seat.seatNumber}>
-                                                Seat number: {seat.seatNumber} - Type: {seat.type}
+                                            <MenuItem
+                                                key={index}
+                                                value={seat.seatNumber}
+                                            >
+                                                Seat number: {seat.seatNumber} -
+                                                Type: {seat.type}
                                             </MenuItem>
                                         ))}
                             </Select>
@@ -150,21 +171,29 @@ const BookingFlight = () => {
                             <Select
                                 name="paymentMethod"
                                 value={paymentMethod}
-                                onChange={(e) => setPaymentMethod(e.target.value)}
-                                sx={{borderRadius: '50px'}}
+                                onChange={(e) =>
+                                    setPaymentMethod(e.target.value)
+                                }
+                                sx={{ borderRadius: '50px' }}
                             >
-                                <MenuItem value="">Choose payment method</MenuItem>
-                                <MenuItem value="cash">
-                                    Cash
+                                <MenuItem value="">
+                                    Choose payment method
                                 </MenuItem>
+                                <MenuItem value="cash">Cash</MenuItem>
                             </Select>
                         </FormControl>
                     </CardContent>
                 </Card>
-                <div style={{flexGrow: 1}}></div>
-                <Card sx={{maxWidth: '600px', marginTop: '60px'}}>
+                <div style={{ flexGrow: 1 }}></div>
+                <Card sx={{ maxWidth: '600px', marginTop: '60px' }}>
                     <CardContent>
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
                             <Box
                                 sx={{
                                     marginLeft: 2,
@@ -177,9 +206,9 @@ const BookingFlight = () => {
                                 <Typography
                                     textAlign="center"
                                     gutterBottom
-                                    sx={{fontWeight: 'bold', fontSize: 22}}
+                                    sx={{ fontWeight: 'bold', fontSize: 22 }}
                                 >
-                                    Thông tin chi tiết
+                                    Detail Information
                                 </Typography>
 
                                 <Box
@@ -191,9 +220,9 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="body1"
-                                        sx={{fontWeight: 'bold'}}
+                                        sx={{ fontWeight: 'bold' }}
                                     >
-                                        Số hiệu máy bay:
+                                        Flight code
                                     </Typography>
                                     <Typography variant="body1">
                                         {flight.number}
@@ -209,12 +238,14 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="body1"
-                                        sx={{fontWeight: 'bold'}}
+                                        sx={{ fontWeight: 'bold' }}
                                     >
-                                        Điểm khởi hành:
+                                        Start from
                                     </Typography>
                                     <Typography variant="body1">
-                                        {getAirportCodeLabel(flight.airportFrom)}
+                                        {getAirportCodeLabel(
+                                            flight.airportFrom
+                                        )}
                                     </Typography>
                                 </Box>
 
@@ -227,9 +258,9 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="body1"
-                                        sx={{fontWeight: 'bold'}}
+                                        sx={{ fontWeight: 'bold' }}
                                     >
-                                        Điểm đến:
+                                        Destionation
                                     </Typography>
                                     <Typography variant="body1">
                                         {getAirportCodeLabel(flight.airportTo)}
@@ -245,9 +276,9 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="body1"
-                                        sx={{fontWeight: 'bold'}}
+                                        sx={{ fontWeight: 'bold' }}
                                     >
-                                        Thời gian khởi hành:
+                                        Departutre time
                                     </Typography>
                                     <Typography variant="body1">
                                         {convertDateTime(flight.departureTime)}
@@ -263,9 +294,9 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="body1"
-                                        sx={{fontWeight: 'bold'}}
+                                        sx={{ fontWeight: 'bold' }}
                                     >
-                                        Thời gian đến:
+                                        Arrival time
                                     </Typography>
                                     <Typography variant="body1">
                                         {convertDateTime(flight.arrivalTime)}
@@ -282,9 +313,12 @@ const BookingFlight = () => {
                                 >
                                     <Typography
                                         variant="h6"
-                                        sx={{fontWeight: 'bold', marginBottom: 1}}
+                                        sx={{
+                                            fontWeight: 'bold',
+                                            marginBottom: 1,
+                                        }}
                                     >
-                                        Chỗ đã chọn
+                                        Seat selected
                                     </Typography>
                                     {/*{selectedSeats.length > 0 ? (*/}
                                     {/*    selectedSeats.map((seat) => (*/}
@@ -319,7 +353,7 @@ const BookingFlight = () => {
                                             textAlign: 'center',
                                         }}
                                     >
-                                        Tổng tiền:{' '}
+                                        Total price:{' '}
                                         {numberWithComas(
                                             calculateTotalPrice(flight.price),
                                             '.'
@@ -332,10 +366,10 @@ const BookingFlight = () => {
                                     variant="contained"
                                     color="primary"
                                     fullWidth
-                                    sx={{marginTop: 2, padding: 1}}
+                                    sx={{ marginTop: 2, padding: 1 }}
                                     onClick={handleBooking}
                                 >
-                                    Đặt chỗ ngồi
+                                    Book
                                 </Button>
                             </Box>
                         </Box>
@@ -346,13 +380,13 @@ const BookingFlight = () => {
                 open={alert.open}
                 autoHideDuration={4000}
                 onClose={handleCloseAlert}
-                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                sx={{marginTop: 6}}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                sx={{ marginTop: 6 }}
             >
                 <Alert
                     onClose={handleCloseAlert}
                     severity={alert.severity}
-                    sx={{width: '100%'}}
+                    sx={{ width: '100%' }}
                 >
                     {alert.message}
                 </Alert>
@@ -369,10 +403,13 @@ const BookingFlight = () => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="confirmation-dialog-description">
-                        Vui lòng đến điểm giao dịch gần nhất thanh toán với số tiền {numberWithComas(
-                        calculateTotalPrice(flight.price),
-                        '.'
-                    )} VND
+                        Vui lòng đến điểm giao dịch gần nhất thanh toán với số
+                        tiền{' '}
+                        {numberWithComas(
+                            calculateTotalPrice(flight.price),
+                            '.'
+                        )}{' '}
+                        VND
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -383,14 +420,14 @@ const BookingFlight = () => {
                         onClick={handleCloseDialog}
                         color="primary"
                         autoFocus
-                        variant='contained'
+                        variant="contained"
                     >
                         Xác nhận
                     </Button>
                 </DialogActions>
             </Dialog>
         </div>
-    );
-};
+    )
+}
 
-export default BookingFlight;
+export default BookingFlight

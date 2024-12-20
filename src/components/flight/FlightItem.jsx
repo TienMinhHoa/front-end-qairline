@@ -134,6 +134,7 @@ export const FlightItem = ({
                                     borderRadius: '50px',
                                     backgroundColor: '#77DADA',
                                     color: '#0E4F4F',
+                                    width: '230px',
                                 }}
                             >
                                 <Typography variant="subtitle2">
